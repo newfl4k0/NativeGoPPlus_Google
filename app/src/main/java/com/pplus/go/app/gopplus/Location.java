@@ -1,0 +1,113 @@
+package com.pplus.go.app.gopplus;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import androidx.appcompat.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import com.pplus.go.Utils.RegexValidator;
+import com.pplus.go.Utils.Utils;
+import app.GoPPlus.R;
+
+public class Location extends AppCompatActivity {
+    static final int SUCCESS = 1;
+
+    ListView list;
+    EditText searchEditText;
+    List<String> foundAddress = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
+    List<Address> addresses = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_location);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        list = findViewById(R.id.list);
+        searchEditText = findViewById(R.id.searchText);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, foundAddress);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String[] addressText = addresses.get(i).getAddressLine(0).split(",");
+                Intent intent = new Intent();
+
+                intent.putExtra("address", addressText[0] + " " + addressText[1]);
+                intent.putExtra("latitude", addresses.get(i).getLatitude());
+                intent.putExtra("longitude", addresses.get(i).getLongitude());
+                setResult(SUCCESS, intent);
+                finish();
+            }
+        });
+
+        list.setAdapter(adapter);
+        Utils.hideKeyboard(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Utils.hideKeyboard(this);
+        super.onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void searchLocation(View view) {
+
+        String location = searchEditText.getText().toString();
+        foundAddress.clear();
+
+        if (RegexValidator.validateRequired(location) && location.length()<100 && RegexValidator.isText(location)) {
+            Geocoder geocoder = new Geocoder(this.getApplicationContext(), Locale.getDefault());
+            location +=","+getResources().getString(R.string.ciudad);
+            ProgressDialog dialog = Utils.getProgressDialog(this, getResources().getString(R.string.defaultProgress));
+            dialog.show();
+
+            try {
+                addresses = geocoder.getFromLocationName(location, 10);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            dialog.hide();
+
+            if (addresses != null && addresses.size() > 0) {
+                for (Address address : addresses) {
+                    String[] addressText = address.getAddressLine(0).split(",");
+                    foundAddress.add(addressText[0] + addressText[1]);
+                }
+
+                adapter.notifyDataSetChanged();
+            } else {
+                Utils.showAlert(this, "No se encontraron resultados");
+            }
+        } else {
+            String errorMessage  = RegexValidator.replaceMessage(RegexValidator.message_required, "Calle y número");
+                   errorMessage += "\n" + RegexValidator.replaceMessage(RegexValidator.message_valid_text, "Calle y número");
+                   errorMessage += "\n" + RegexValidator.replaceMessage(RegexValidator.message_less_than, "Calle y número,100");
+
+            Utils.showAlert(this,  errorMessage);
+        }
+
+        Utils.hideKeyboard(this);
+    }
+}

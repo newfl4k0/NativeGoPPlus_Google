@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <ImageView
+        android:id="@+id/vehicleImage"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:contentDescription="Vehicle Type"
+        android:src="@mipmap/vehiclered" />
+
+
+    <TextView
+        android:id="@+id/vehicleType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="..."
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/vehicle_box"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:textAlignment="center">
+
+        <TextView
+            android:id="@+id/startPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Base: $0"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/timePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minuto: $0"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/kmPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Km: $0"
+            android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>
+
+

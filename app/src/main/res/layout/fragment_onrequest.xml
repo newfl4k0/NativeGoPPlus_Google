@@ -1,0 +1,157 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="app.gopplus.Onrequest"
+    android:layout_marginTop="56dp">
+
+
+    <androidx.constraintlayout.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="90dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/openDestination"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:background="@mipmap/redbutton"
+            android:fontFamily="@font/avenir_medium"
+            android:stateListAnimator="@null"
+            android:text="SIGUIENTE"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/map"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/swipeArrow"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+            </LinearLayout>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <LinearLayout
+                    android:id="@+id/vehiclesContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:background="@color/black"
+            android:gravity="center"
+            android:padding="4dp"
+            app:layout_constraintBottom_toTopOf="@id/startPin"
+            app:layout_constraintEnd_toEndOf="@id/map"
+            app:layout_constraintStart_toStartOf="@id/map">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Espere un momento"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/startPin"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="15dp"
+            android:src="@mipmap/pin"
+            app:layout_constraintBottom_toBottomOf="@id/map"
+            app:layout_constraintEnd_toEndOf="@id/map"
+            app:layout_constraintStart_toStartOf="@id/map"
+            app:layout_constraintTop_toTopOf="@id/map" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/viewLocation"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@mipmap/bglocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/map">
+
+            <ImageView
+                android:id="@+id/pinImage"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/pinblanco"
+                app:layout_constraintBottom_toBottomOf="@id/viewLocation"
+                app:layout_constraintStart_toStartOf="@id/viewLocation"
+                app:layout_constraintTop_toTopOf="@id/viewLocation" />
+
+            <TextView
+                android:id="@+id/searchText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:gravity="left|center"
+                android:text="Buscando ubicación"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/userLocation"
+                app:layout_constraintStart_toEndOf="@id/pinImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/userLocation"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:background="@mipmap/location"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </androidx.constraintlayout.ConstraintLayout>
+
+</FrameLayout>

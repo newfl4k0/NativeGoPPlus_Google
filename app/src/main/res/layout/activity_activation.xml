@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" app:layout_behavior="@string/appbar_scrolling_view_behavior" tools:context="com.pplus.go.app.gopplus.Activation">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bar_height"
+            android:background="@mipmap/bgnavbar"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="74dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/logo" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <androidx.constraintlayout.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:background="@mipmap/bgcroquisgris">
+
+        <TextView
+            android:id="@+id/instructionsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:text="@string/activation_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/container"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/codeField"
+            style="@style/EditText_White"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="16dp"
+            android:hint="Código"
+            android:inputType="text"
+            android:maxLength="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/instructionsLabel" />
+
+        <Button
+            android:id="@+id/activateButton"
+            android:layout_height="wrap_content"
+            style="@style/Button_Black"
+            app:layout_constraintTop_toBottomOf="@+id/codeField"
+            app:layout_constraintStart_toStartOf="@id/codeField"
+            app:layout_constraintEnd_toEndOf="@id/codeField"
+            android:layout_marginTop="16dp"
+            android:text="ACTIVAR MI CUENTA"
+            android:onClick="doActivate"
+            android:layout_width="match_parent" />
+
+        <Button
+            android:layout_height="wrap_content"
+            style="@style/Button_Gray"
+            app:layout_constraintTop_toBottomOf="@+id/activateButton"
+            app:layout_constraintStart_toStartOf="@id/activateButton"
+            app:layout_constraintEnd_toEndOf="@id/activateButton"
+            android:layout_marginTop="16dp"
+            android:text="REENVIAR CÓDIGO"
+            android:onClick="doResend"
+            android:layout_width="wrap_content" />
+
+    </androidx.constraintlayout.ConstraintLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

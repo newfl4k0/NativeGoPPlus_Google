@@ -1,0 +1,36 @@
+<resources>
+    <style name="AppTheme.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:fontFamily">@font/avenir_book</item>
+    </style>
+    <style name="EditText_White">
+        <item name="android:background">@mipmap/bgtextwhite</item>
+        <item name="android:textColor">#808080</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="Button_Black">
+        <item name="android:background">#222222</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="Button_Gray">
+        <item name="android:background">#666666</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@mipmap/bgred</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="menu_text_style" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Menu">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/avenir_book</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="CircularProgress" parent="AppTheme">
+        <item name="android:colorAccent">@color/white</item>
+    </style>
+</resources>

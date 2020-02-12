@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:focusable="false"
+    android:focusableInTouchMode="false">
+
+
+    <androidx.constraintlayout.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/numberContainer"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/card_box"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/deleteCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/cardNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="**** **** **** "
+                android:textSize="20sp"
+                android:layout_marginLeft="16dp"
+                android:textColor="@color/black" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <Button
+            android:id="@+id/deleteCard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="4dp"
+            android:background="@mipmap/deletebutton"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.ConstraintLayout>
+
+</androidx.constraintlayout.ConstraintLayout>

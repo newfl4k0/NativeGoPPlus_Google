@@ -1,0 +1,215 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.pplus.go.app.gopplus.">
+
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </WebView>
+
+    <androidx.constraintlayout.ConstraintLayout
+        android:id="@+id/waitContainer"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@mipmap/bgred">
+
+
+
+        <ProgressBar
+            android:theme="@style/CircularProgress"
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/waitTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="24dp"
+            android:layout_marginLeft="20dp"
+            />
+
+        <TextView
+            android:id="@+id/waitTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/defaultProgress"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.ConstraintLayout>
+
+    <androidx.constraintlayout.ConstraintLayout
+        android:id="@+id/dataContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="56dp">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/driverContainer"/>
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/statusContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/map"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="64dp"
+            android:layout_marginRight="64dp"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/serviceStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/green"
+                android:text="ESTATUS"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="20sp"/>
+
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/centerLocation"
+                android:background="@mipmap/location"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="8dp"
+                />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/driverContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="8dp">
+
+
+            <ImageView
+                android:id="@+id/driverImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"  />
+
+            <ImageView
+                android:layout_marginTop="8dp"
+                android:id="@+id/starIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/iconstaryellow"
+                app:layout_constraintTop_toBottomOf="@id/driverImage"
+                app:layout_constraintStart_toStartOf="@id/driverImage"
+                android:layout_marginLeft="10dp"
+                />
+
+            <TextView
+                android:id="@+id/driverRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/starIcon"
+                app:layout_constraintBottom_toBottomOf="@id/starIcon"
+                app:layout_constraintStart_toEndOf="@id/starIcon"
+                android:text="5"
+                android:textSize="18sp"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/driverNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DRIVER NAME"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/carText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MAKE /MODEL"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/darkgray"
+                app:layout_constraintTop_toBottomOf="@+id/driverNameText"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/extracarText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LIC /COLOR / PLATE"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/darkgray"
+                app:layout_constraintTop_toBottomOf="@+id/carText"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/kmText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KM"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/darkgray"
+                app:layout_constraintTop_toBottomOf="@+id/extracarText"
+                android:textSize="14sp" />
+
+
+            <Button
+                android:id="@+id/cancelServiceButton"
+                android:background="@mipmap/cancelar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/kmText"
+                android:layout_marginTop="8dp"
+                />
+
+            <Button
+                android:id="@+id/chatButton"
+                android:background="@mipmap/chat"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toStartOf="@+id/cancelServiceButton"
+                app:layout_constraintTop_toBottomOf="@+id/kmText"
+                app:layout_constraintTop_toTopOf="@+id/cancelServiceButton"
+                android:layout_marginRight="16dp"
+                />
+
+
+
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </androidx.constraintlayout.ConstraintLayout>
+
+
+
+
+
+</FrameLayout>

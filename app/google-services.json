@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "533555169690",
+    "firebase_url": "https://gopplus-fcm.firebaseio.com",
+    "project_id": "gopplus-fcm",
+    "storage_bucket": "gopplus-fcm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533555169690:android:1d9dcecc227b0c08",
+        "android_client_info": {
+          "package_name": "com.pplus.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533555169690-o1adhtu8i5d1aahmv6ov3sk1uf63l8jb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZFo0yjth7qmCgB6Xf4z30FCUbv5IC0i4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533555169690:android:7357c482d93a8435",
+        "android_client_info": {
+          "package_name": "com.pplus.go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533555169690-o1adhtu8i5d1aahmv6ov3sk1uf63l8jb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZFo0yjth7qmCgB6Xf4z30FCUbv5IC0i4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

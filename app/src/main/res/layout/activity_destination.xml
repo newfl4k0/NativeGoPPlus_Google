@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pplus.go.app.gopplus.Destination">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        tools:ignore="MissingConstraints">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bar_height"
+            android:background="@mipmap/bgnavbar"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="74dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/logo" />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="56dp" />
+
+    <androidx.constraintlayout.ConstraintLayout
+        android:id="@+id/containerData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="56dp">
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/actionContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/endPin"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="15dp"
+            android:src="@mipmap/flag"
+            app:layout_constraintBottom_toBottomOf="@id/map"
+            app:layout_constraintEnd_toEndOf="@id/map"
+            app:layout_constraintStart_toStartOf="@id/map"
+            app:layout_constraintTop_toTopOf="@id/map" />
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/pricePreviewContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:background="@color/black"
+            android:padding="4dp"
+            app:layout_constraintBottom_toTopOf="@id/endPin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+            <TextView
+                android:id="@+id/priceValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿A dónde te llevamos?"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintEnd_toEndOf="@id/pricePreviewContainer"
+                app:layout_constraintStart_toStartOf="@id/pricePreviewContainer"
+                tools:ignore="MissingConstraints" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/fromLocation"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@mipmap/bglocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/map">
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/pinblanco"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:id="@+id/fromLocationText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="10dp"
+                android:text="Origen: "/>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/toLocation"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:background="@mipmap/bglocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fromLocation">
+
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/pinblanco"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:id="@+id/toLocationText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:text="Destino: "
+                android:onClick="doSearchLocation"/>
+
+
+            <ImageView
+                android:id="@+id/centerUserLocation"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/location"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="doCenterLocation"/>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/actionContainer"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/gray"
+            app:layout_constraintBottom_toTopOf="@+id/paymentContainer">
+
+            <Button
+                android:id="@+id/setupPriceButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/redbuttondark"
+                android:fontFamily="@font/avenir_medium"
+                android:orientation="vertical"
+                android:text="ESTIMAR COSTO"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@id/actionContainer"
+                app:layout_constraintWidth_percent="0.5"
+                android:onClick="doCalculateFare"
+                tools:ignore="MissingConstraints" />
+
+            <Button
+                android:id="@+id/continueButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/redbutton"
+                android:fontFamily="@font/avenir_medium"
+                android:orientation="vertical"
+                android:text="SOLICITAR"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/setupPriceButton"
+                app:layout_constraintWidth_percent="0.5"
+                android:onClick="doRequest"
+                tools:ignore="MissingConstraints" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/paymentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/codeContainer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toEndOf="@id/cardContainer"
+                app:layout_constraintWidth_percent="0.5"
+                android:onClick="doOpenPromoCode">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/payment_box"
+                    android:layout_margin="4dp" />
+
+                <TextView
+                    android:id="@+id/paymentMethodLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="CÓDIGO DE DESCUENTO"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@id/codeContainer"
+                    app:layout_constraintStart_toStartOf="@id/codeContainer"
+                    app:layout_constraintTop_toTopOf="@id/codeContainer" />
+
+                <TextView
+                    android:id="@+id/paymentMethodValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Ninguno"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="@id/codeContainer"
+                    app:layout_constraintStart_toStartOf="@id/codeContainer"
+                    app:layout_constraintTop_toBottomOf="@+id/paymentMethodLabel" />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cardContainer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="@id/paymentContainer"
+                app:layout_constraintWidth_percent="0.5"
+                android:onClick="doOpenCreditCards">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/payment_box"
+                    android:layout_margin="4dp" />
+
+                <TextView
+                    android:id="@+id/codeMethodLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="MÉTODO DE PAGO"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@id/cardContainer"
+                    app:layout_constraintStart_toStartOf="@id/cardContainer"
+                    app:layout_constraintTop_toTopOf="@id/cardContainer" />
+
+                <TextView
+                    android:id="@+id/codeMethodValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Ninguna"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="@id/cardContainer"
+                    app:layout_constraintStart_toStartOf="@id/cardContainer"
+                    app:layout_constraintTop_toBottomOf="@+id/codeMethodLabel" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </androidx.constraintlayout.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.ConstraintLayout>
