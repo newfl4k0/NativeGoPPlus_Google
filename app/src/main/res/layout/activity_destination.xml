@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.pplus.go.app.gopplus.Destination">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         tools:ignore="MissingConstraints">
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bar_height"
@@ -25,8 +25,8 @@
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
                 android:src="@mipmap/logo" />
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <WebView
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="56dp" />
 
-    <androidx.constraintlayout.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -64,7 +64,7 @@
             app:layout_constraintTop_toTopOf="@id/map" />
 
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/pricePreviewContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,10 +86,10 @@
                 app:layout_constraintStart_toStartOf="@id/pricePreviewContainer"
                 tools:ignore="MissingConstraints" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fromLocation"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -122,10 +122,10 @@
                 android:text="Origen: "/>
 
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toLocation"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -172,9 +172,9 @@
                 android:onClick="doCenterLocation"/>
 
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/actionContainer"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -211,16 +211,16 @@
                 android:onClick="doRequest"
                 tools:ignore="MissingConstraints" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/paymentContainer"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/codeContainer"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -258,9 +258,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/paymentMethodLabel" />
 
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardContainer"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -297,14 +297,14 @@
                     app:layout_constraintStart_toStartOf="@id/cardContainer"
                     app:layout_constraintTop_toBottomOf="@+id/codeMethodLabel" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.constraintlayout.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-</androidx.constraintlayout.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

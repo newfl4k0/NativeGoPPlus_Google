@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,7 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
         android:id="@+id/mapImage"
         android:layout_width="match_parent"
@@ -26,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statusText" />
 
-    <androidx.constraintlayout.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp"
@@ -51,7 +50,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/driverText" />
 
-
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -71,7 +69,6 @@
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/pin"
             app:layout_constraintTop_toBottomOf="@+id/carText" />
-
 
         <ImageView
             android:layout_width="20dp"
@@ -93,7 +90,6 @@
             app:layout_constraintStart_toEndOf="@+id/flag"
             app:layout_constraintTop_toBottomOf="@+id/startText" />
 
-
         <TextView
             android:id="@+id/dateText"
             android:layout_width="wrap_content"
@@ -104,7 +100,6 @@
             app:layout_constraintStart_toEndOf="@+id/pin"
             app:layout_constraintTop_toBottomOf="@+id/endText" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.ConstraintLayout>
-
-</androidx.constraintlayout.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

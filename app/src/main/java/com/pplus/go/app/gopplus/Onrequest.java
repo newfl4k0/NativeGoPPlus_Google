@@ -160,7 +160,7 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
         (getView().findViewById(R.id.openDestination)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (vehicleSelected != null && locationSelected != null && vehiclesHidden == true) {
+                if (vehicleSelected != null && locationSelected != null && vehiclesHidden) {
                     Intent intent = new Intent(getActivity(), Destination.class);
                     intent.putExtra(Destination.DESTINATION_REQUEST_LOCATION, locationSelected.toString());
                     intent.putExtra(Destination.DESTINATION_REQUEST_TYPE, vehicleSelected.toString());

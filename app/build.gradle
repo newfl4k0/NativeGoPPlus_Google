@@ -15,8 +15,8 @@ android {
         applicationId "com.pplus.go"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 57
-        versionName '1.0.57'
+        versionCode 58
+        versionName '1.0.58'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
     }
@@ -32,7 +32,7 @@ android {
 
 ext {
     appCompatVersion = '1.1.0'
-    designSupportVersion = '1.0.0'
+    designSupportVersion = '1.1.0'
     recyclerViewVersion = '1.0.0'
 }
 
@@ -47,14 +47,14 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    implementation 'com.google.firebase:firebase-core:17.2.2'
-    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-core:17.2.3'
+    implementation 'com.google.firebase:firebase-auth:19.3.0'
     implementation 'com.google.firebase:firebase-crash:16.2.1'
-    implementation 'com.google.firebase:firebase-iid:20.0.2'
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.google.firebase:firebase-iid:20.1.2'
+    implementation 'com.google.firebase:firebase-messaging:20.1.3'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation 'com.facebook.android:facebook-android-sdk:6.0.0'
+    implementation 'com.facebook.android:facebook-android-sdk:6.3.0'
     implementation 'com.google.gms:google-services:4.3.3'
     implementation "androidx.appcompat:appcompat:${appCompatVersion}"
     implementation "com.google.android.material:material:${designSupportVersion}"

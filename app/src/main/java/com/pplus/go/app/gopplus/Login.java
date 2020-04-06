@@ -21,8 +21,17 @@ import app.GoPPlus.R;
 public class Login extends AppCompatActivity {
 
     Activity loginActivity;
-    String email = "";
-    String password = "";
+    String email;
+
+    {
+        email = "";
+    }
+
+    String password;
+
+    {
+        password = "";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +131,7 @@ public class Login extends AppCompatActivity {
                 dialog.dismiss();
 
                 try {
-                    if (response.getBoolean("status") == true) {
+                    if (response.getBoolean("status")) {
 
                         if (response.getInt("esActivo") == 1) {
 

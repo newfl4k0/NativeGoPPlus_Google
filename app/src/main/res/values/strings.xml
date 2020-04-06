@@ -33,9 +33,9 @@
     <string name="activation_text">Ingresa el código de activación que se te envío por correo electrónico</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="facebook_app_id">265041683945427</string>
+    <string name="facebook_app_id">2328732394056096</string>
     <string name="fb_login_protocol_scheme">fb265041683945427</string>
-    <string name="apiKey">AIzaSyAZFo0yjth7qmCgB6Xf4z30FCUbv5IC0i4</string>
+    <string name="apiKey">AIzaSyAnLqd2gzuXQxq_msNZSDAHxn7PTNN7b7Q</string>
     <string name="default_notification_channel_id">default</string>
-    <string name="version_name">GoPPlus 1.0.0.57</string>
+    <string name="version_name">GoPPlus 1.0.0.58</string>
 </resources>

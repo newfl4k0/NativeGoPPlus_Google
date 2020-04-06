@@ -25,7 +25,7 @@ import app.GoPPlus.R;
 
 public class APIRequest {
     private static RequestQueue queue;
-    private static HashMap<String, String> headers = new HashMap<String, String>();
+    private static HashMap<String, String> headers = new HashMap<>();
     private static Activity currentActivity;
 
     public static void setQueue(Activity activity){
@@ -39,7 +39,7 @@ public class APIRequest {
         queue.cancelAll(R.string.app_name);
     }
 
-    public static void getRequest(String url, final ResponseInterface listener) {
+    private static void getRequest(String url, final ResponseInterface listener) {
         try {
             headers.put("appid", Database.getAppId(currentActivity));
             headers.put("userid", Database.getEncryptedUserId(currentActivity));
@@ -58,7 +58,7 @@ public class APIRequest {
                     Log.d("ERROR", error.toString());
                     listener.Error(error);
                 }
-            }){
+            }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     return headers;
@@ -174,7 +174,7 @@ public class APIRequest {
             @Override
             public void Success(JSONObject response) {
                 try {
-                    if (response.getBoolean("status") == true) {
+                    if (response.getBoolean("status")) {
                         listener.Success(response);
                     } else {
                         listener.Error(response);

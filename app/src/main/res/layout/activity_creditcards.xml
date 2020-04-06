@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.pplus.go.app.gopplus.CreditCards">
-
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         tools:ignore="MissingConstraints">
-
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bar_height"
@@ -26,22 +24,16 @@
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
                 android:src="@mipmap/logo" />
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
-
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
     <androidx.core.widget.NestedScrollView
         android:layout_marginTop="56dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/bgcroquisgris"
         android:scrollbars="vertical"
-        android:fillViewport="true"
-        >
-
-
-        <androidx.constraintlayout.ConstraintLayout android:layout_width="match_parent" android:layout_height="match_parent">
-
-
+        android:fillViewport="true">
+        <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="match_parent">
             <WebView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -49,7 +41,6 @@
                 android:id="@+id/webview"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
             <ListView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
@@ -59,8 +50,7 @@
                 android:divider="#00000000"
                 android:descendantFocusability="blocksDescendants"
                 />
-
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/addCardContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,8 +66,8 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="MissingConstraints" />
                 <EditText
                     android:id="@+id/numberText"
                     style="@style/EditText_White"
@@ -88,8 +78,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/addLabel" />
-
-
                 <EditText
                     android:id="@+id/monthText"
                     style="@style/EditText_White"
@@ -101,8 +89,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/numberText"
                     app:layout_constraintWidth_percent="0.49" />
-
-
                 <EditText
                     android:id="@+id/yearText"
                     style="@style/EditText_White"
@@ -114,8 +100,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/numberText"
                     app:layout_constraintWidth_percent="0.49" />
-
-
                 <EditText
                     android:id="@+id/securityText"
                     style="@style/EditText_White"
@@ -126,8 +110,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/monthText" />
-
-
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -139,10 +121,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/securityText" />
-            </android.support.constraint.ConstraintLayout>
 
-
-
-        </androidx.constraintlayout.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
