@@ -7,10 +7,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="apiEndpoint">https://goclient.azurewebsites.net/</string>
-    <string name="apiDriver">https://godriver.azurewebsites.net/</string>
-    <string name="apiPayment">https://gopspay.azurewebsites.net/</string>
-    <string name="apiAdmin">https://gopplusweb-test.azurewebsites.net/</string>
+    <string name="apiEndpoint">https://goclientx.goppluswebx.com/</string>
+    <string name="apiDriver">https://goclientx.goppluswebx.com/</string>
+    <string name="apiPayment">https://gopspayx.goppluswebx.com/</string>
+    <string name="apiAdmin">https://gopplusweb.goppluswebx.com/</string>
     <string name="default_terms">https://www.primeraplus.com.mx</string>
 
     <string name="secret">g0sp3qtrUm_</string>
@@ -34,8 +34,8 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="facebook_app_id">2328732394056096</string>
-    <string name="fb_login_protocol_scheme">fb265041683945427</string>
+    <string name="fb_login_protocol_scheme">fb2328732394056096</string>
     <string name="apiKey">AIzaSyAnLqd2gzuXQxq_msNZSDAHxn7PTNN7b7Q</string>
     <string name="default_notification_channel_id">default</string>
-    <string name="version_name">GoPPlus 1.0.0.58</string>
+    <string name="version_name">GoPPlus 1.0.0.60</string>
 </resources>

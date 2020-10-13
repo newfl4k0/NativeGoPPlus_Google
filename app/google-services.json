@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:533555169690:android:1d9dcecc227b0c08",
+        "android_client_info": {
+          "package_name": "com.pplus.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533555169690-o1adhtu8i5d1aahmv6ov3sk1uf63l8jb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuOp7OCwaA0ikX5eTApR0-2cb3k1Wt2hA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533555169690-o1adhtu8i5d1aahmv6ov3sk1uf63l8jb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:533555169690:android:7357c482d93a8435",
         "android_client_info": {
           "package_name": "com.pplus.go"
@@ -21,19 +50,17 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAnLqd2gzuXQxq_msNZSDAHxn7PTNN7b7Q"
+          "current_key": "AIzaSyCuOp7OCwaA0ikX5eTApR0-2cb3k1Wt2hA"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533555169690-o1adhtu8i5d1aahmv6ov3sk1uf63l8jb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

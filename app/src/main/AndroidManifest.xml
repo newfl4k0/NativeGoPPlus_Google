@@ -70,14 +70,6 @@
             </intent-filter>
         </service>
 
-        <service
-            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.FireBase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
-
         <receiver
             android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
             android:exported="true"
