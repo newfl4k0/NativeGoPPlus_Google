@@ -89,7 +89,7 @@
                 android:background="@mipmap/location"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginRight="8dp"
-                />
+                tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -138,7 +138,8 @@
                 android:text="DRIVER NAME"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/carText"

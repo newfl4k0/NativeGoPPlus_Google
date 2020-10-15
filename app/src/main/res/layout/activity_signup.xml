@@ -8,7 +8,6 @@
     tools:context="com.pplus.go.app.gopplus.Signup"
     android:background="@mipmap/bgcroquisgris">
 
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

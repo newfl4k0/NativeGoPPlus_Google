@@ -1,5 +1,6 @@
 package com.pplus.go.API;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
 
@@ -26,6 +27,7 @@ import app.GoPPlus.R;
 public class APIRequest {
     private static RequestQueue queue;
     private static HashMap<String, String> headers = new HashMap<>();
+    @SuppressLint("StaticFieldLeak")
     private static Activity currentActivity;
 
     public static void setQueue(Activity activity){

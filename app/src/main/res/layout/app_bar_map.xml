@@ -11,14 +11,12 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bar_height"
             android:background="@mipmap/bgnavbar"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-
 
             <ImageView
                 android:id="@+id/logo"
@@ -29,10 +27,7 @@
                 android:scaleType="fitCenter"
                 android:src="@mipmap/logo" />
 
-
         </androidx.appcompat.widget.Toolbar>
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout

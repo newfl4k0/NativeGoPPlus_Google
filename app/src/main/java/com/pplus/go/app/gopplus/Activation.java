@@ -93,4 +93,8 @@ public class Activation extends AppCompatActivity {
         });
 
     }
+
+    public void doActivate(View view) {
+        new Activation();
+    }
 }

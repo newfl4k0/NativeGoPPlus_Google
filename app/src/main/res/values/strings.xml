@@ -7,10 +7,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="apiEndpoint">https://goclientx.goppluswebx.com/</string>
-    <string name="apiDriver">https://goclientx.goppluswebx.com/</string>
-    <string name="apiPayment">https://gopspayx.goppluswebx.com/</string>
-    <string name="apiAdmin">https://gopplusweb.goppluswebx.com/</string>
+    <string name="apiEndpoint">https://gopplusc.azurewebsites.net/</string>
+    <string name="apiDriver">https://gopplusd.azurewebsites.net/</string>
+    <string name="apiPayment">https://gopplusp.azurewebsites.net/</string>
+    <string name="apiAdmin">https://gopplus.website/</string>
     <string name="default_terms">https://www.primeraplus.com.mx</string>
 
     <string name="secret">g0sp3qtrUm_</string>
