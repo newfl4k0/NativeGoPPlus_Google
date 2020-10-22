@@ -12,7 +12,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.pplus.go"
+        applicationId 'com.pplus.gos'
         minSdkVersion 27
         targetSdkVersion 30
         versionCode 61
