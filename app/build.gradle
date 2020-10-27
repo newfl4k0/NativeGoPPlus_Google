@@ -3,20 +3,26 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         debug {
-            storeFile file(var1)
-            storePassword 'go2017'
-            keyPassword 'go2017'
+            storePassword 'Gopplus2020++'
+            keyPassword 'Gopplus2020++'
             keyAlias = 'go'
+            storeFile file('/Users/flythe/StudioProjects/NativeGoPPlus_Google2/signing/gopplusx')
+        }
+        release {
+            storeFile file('/Users/flythe/StudioProjects/NativeGoPPlus_Google2/signing/gopplusx')
+            storePassword 'Gopplus2020++'
+            keyAlias 'go'
+            keyPassword 'Gopplus2020++'
         }
     }
     compileSdkVersion 30
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.pplus.go"
-        minSdkVersion 27
+        applicationId "com.pplus.gos"
+        minSdkVersion 24
         targetSdkVersion 30
-        versionCode 61
-        versionName '1.0.61'
+        versionCode 62
+        versionName '1.0.62'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
     }
@@ -54,7 +60,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.3.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.1.0'
-    implementation 'com.facebook.android:facebook-android-sdk:8.0.0'
+    implementation 'com.facebook.android:facebook-android-sdk:8.1.0'
     implementation 'com.google.gms:google-services:4.3.4'
     implementation "androidx.appcompat:appcompat:${appCompatVersion}"
     implementation "com.google.android.material:material:1.2.1"

@@ -124,9 +124,9 @@ public class Map extends AppCompatActivity implements NavigationView.OnNavigatio
                         }
                     }
 
-                    if (getSupportActionBar().isShowing() == false) {
+                   /* if (getSupportActionBar().isShowing() == false) {
                         getSupportActionBar().show();
-                    }
+                    }*/
 
                     if (updateProfile) {
                         loopServiceHandler.postDelayed(
@@ -209,9 +209,9 @@ public class Map extends AppCompatActivity implements NavigationView.OnNavigatio
          * Replace Toolbar
          */
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setTitle("");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /**
          * Setup Navigation Drawer
