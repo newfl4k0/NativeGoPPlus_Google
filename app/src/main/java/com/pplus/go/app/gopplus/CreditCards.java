@@ -64,9 +64,9 @@ public class CreditCards extends AppCompatActivity {
         setContentView(R.layout.activity_creditcards);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /*setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         creditCardActivity = this;
 
         list = findViewById(R.id.list);

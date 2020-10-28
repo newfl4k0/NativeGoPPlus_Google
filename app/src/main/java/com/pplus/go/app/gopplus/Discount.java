@@ -21,9 +21,9 @@ public class Discount extends AppCompatActivity {
         setContentView(R.layout.activity_discount);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setTitle("");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         try {
             JSONObject user = new JSONObject(Database.Select(this, getResources().getString(R.string.db_user)));

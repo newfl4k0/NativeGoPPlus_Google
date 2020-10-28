@@ -43,9 +43,9 @@ public class Chat extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /*setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         chatActivity = this;
         messages = new JSONArray();

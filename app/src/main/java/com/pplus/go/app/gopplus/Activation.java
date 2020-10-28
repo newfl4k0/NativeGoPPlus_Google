@@ -36,9 +36,9 @@ public class Activation extends AppCompatActivity {
         setContentView(R.layout.activity_activation);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //setSupportActionBar(toolbar);
+        //Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         user_id = getIntent().getIntExtra("id", 0);
     }

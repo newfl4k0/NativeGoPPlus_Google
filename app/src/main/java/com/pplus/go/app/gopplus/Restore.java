@@ -33,9 +33,9 @@ public class Restore extends AppCompatActivity {
         setContentView(R.layout.activity_restore);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /*setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
         restoreActivity = this;
         email = getIntent().getStringExtra("email");
     }

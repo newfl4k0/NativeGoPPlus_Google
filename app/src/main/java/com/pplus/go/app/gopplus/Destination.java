@@ -103,9 +103,9 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
         destinationActivity = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setTitle("");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Log.d(LCAT, getIntent().getStringExtra(DESTINATION_REQUEST_LOCATION));
         Log.d(LCAT, getIntent().getStringExtra(DESTINATION_REQUEST_TYPE));

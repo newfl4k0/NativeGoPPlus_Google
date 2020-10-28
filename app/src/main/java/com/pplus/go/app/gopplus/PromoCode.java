@@ -33,9 +33,9 @@ public class PromoCode extends AppCompatActivity {
         setContentView(R.layout.activity_promocode);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        /*setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         codeText = (EditText) findViewById(R.id.codeText);
         promoCodeActivity = this;

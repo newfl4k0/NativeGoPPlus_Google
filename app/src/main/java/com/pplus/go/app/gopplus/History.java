@@ -40,9 +40,9 @@ public class History extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         historyActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setTitle("");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         list = findViewById(R.id.list);
         list.setAdapter(historyAdapter);

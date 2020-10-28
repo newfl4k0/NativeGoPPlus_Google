@@ -30,9 +30,9 @@ public class Forgot extends AppCompatActivity {
         setContentView(R.layout.activity_forgot);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //setSupportActionBar(toolbar);
+        //getSupportActionBar().setTitle("");
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         forgotActivity = this;
         APIRequest.setQueue(this);
     }
