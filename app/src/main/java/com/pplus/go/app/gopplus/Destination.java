@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +38,8 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.Normalizer;
+import java.util.Objects;
+
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.pplus.go.API.APIRequest;
@@ -71,7 +72,7 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
     private JSONObject fare;
     private JSONObject promoCode;
     private JSONObject creditCard;
-    private float zoom = 20.0f;
+    private final float zoom = 20.0f;
     private double estimatedDistance = 0;
     private double estimated;
     private LocationManager locationManager;
@@ -88,13 +89,14 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
 
     private static final String LCAT = "DESTINATION";
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Utils.showAlert(destinationActivity, intent.getStringExtra("message"));
         }
     };
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,13 +104,13 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
 
         destinationActivity = this;
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         //getSupportActionBar().setTitle("");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Log.d(LCAT, getIntent().getStringExtra(DESTINATION_REQUEST_LOCATION));
-        Log.d(LCAT, getIntent().getStringExtra(DESTINATION_REQUEST_TYPE));
+        Log.d(LCAT, Objects.requireNonNull(getIntent().getStringExtra(DESTINATION_REQUEST_LOCATION)));
+        Log.d(LCAT, Objects.requireNonNull(getIntent().getStringExtra(DESTINATION_REQUEST_TYPE)));
 
         SupportMapFragment mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         webView = (WebView) findViewById(R.id.webView);
@@ -146,10 +148,10 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
         webView.setWebViewClient(webViewClient);
 
         try {
-            fromLocation = new JSONObject(getIntent().getStringExtra(DESTINATION_REQUEST_LOCATION));
-            toLocation = new JSONObject(getIntent().getStringExtra(DESTINATION_REQUEST_LOCATION));
-            fare = new JSONObject(getIntent().getStringExtra(DESTINATION_REQUEST_TYPE));
-            mapFragment.getMapAsync(this);
+            fromLocation = new JSONObject(Objects.requireNonNull(getIntent().getStringExtra(DESTINATION_REQUEST_LOCATION)));
+            toLocation = new JSONObject(Objects.requireNonNull(getIntent().getStringExtra(DESTINATION_REQUEST_LOCATION)));
+            fare = new JSONObject(Objects.requireNonNull(getIntent().getStringExtra(DESTINATION_REQUEST_TYPE)));
+            Objects.requireNonNull(mapFragment).getMapAsync(this);
 
             fromLocationText = findViewById(R.id.fromLocationText);
             toLocationText = findViewById(R.id.toLocationText);
@@ -171,7 +173,7 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
             if (resultCode == CREDITCARD_RESULT_SUCCESS) {
                 if (data.hasExtra("cardObject")) {
                     try {
-                        creditCard = new JSONObject(data.getStringExtra("cardObject"));
+                        creditCard = new JSONObject(Objects.requireNonNull(data.getStringExtra("cardObject")));
                         creditCardText.setText("**** " + creditCard.getString("Numero"));
                     } catch (JSONException e){
                         e.printStackTrace();
@@ -189,7 +191,7 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
             if (resultCode == PROMOCODE_RESULT_SUCCESS) {
                 if (data.hasExtra("codeObject")) {
                     try {
-                        promoCode = new JSONObject(data.getStringExtra("codeObject"));
+                        promoCode = new JSONObject(Objects.requireNonNull(data.getStringExtra("codeObject")));
                         promoCodeText.setText(promoCode.getString("code"));
                     } catch (JSONException e){
                         e.printStackTrace();
@@ -261,7 +263,7 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
 
                     String address = SearchLocation.searchByLocation(destinationActivity, location);
 
-                    if (address.isEmpty() == false) {
+                    if (!address.isEmpty()) {
                         toLocationText.setText("Destino: " + address);
 
                         try {
@@ -400,6 +402,7 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
         try {
             String error = "";
 
+            estimatedDistance /= 1000;
 
             if (toLocation.getString("address") == "") {
                 error = "Selecciona una dirección destino válida\n";
@@ -409,9 +412,9 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
                 error += "Selecciona una dirección destino diferente a la dirección origen\n";
             }
 
-            if (estimatedDistance < 100) {
+            /*if (estimatedDistance < 100) {
                 error += "Selecciona una dirección destino con más de 100mts de diferencia con la dirección origen\n";
-            }
+            }*/
 
             if (creditCard == null) {
                 error += "Selecciona un método de pago\n";
@@ -433,7 +436,7 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
                     }
                 }
 
-                estimatedDistance = estimatedDistance / 1000;
+
 
                 String paymenturl = getResources().getString(R.string.apiPayment) + "preauth-service-start";
                 paymenturl += "?card_id=" + String.valueOf(creditCard.getInt("Id"));
