@@ -21,8 +21,8 @@ android {
         applicationId "com.pplus.gos"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 64
-        versionName '1.0.64'
+        versionCode 65
+        versionName '1.0.65'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
     }
