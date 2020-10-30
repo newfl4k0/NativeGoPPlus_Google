@@ -35,7 +35,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="facebook_app_id">2328732394056096</string>
     <string name="fb_login_protocol_scheme">fb2328732394056096</string>
-    <string name="apiKey">AIzaSyAnLqd2gzuXQxq_msNZSDAHxn7PTNN7b7Q</string>
+    <string name="apiKey">AIzaSyBHLzjH7LEnHdjUlTaRrDBpLjOIsyqTTIs</string>
     <string name="default_notification_channel_id">default</string>
     <string name="version_name">GoPPlus 1.0.0.64</string>
 </resources>
