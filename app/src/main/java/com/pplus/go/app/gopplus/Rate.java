@@ -22,7 +22,6 @@ import com.pplus.go.API.APIRequest;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
-import app.GoPPlus.R;
 
 public class Rate extends AppCompatActivity {
     private static final String LCAT = "RATE";

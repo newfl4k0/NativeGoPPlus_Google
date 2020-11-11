@@ -51,7 +51,6 @@ import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.PermissionUtils;
 import com.pplus.go.Data.Database;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
-import app.GoPPlus.R;
 
 public class Onrequest extends Fragment implements OnMapReadyCallback {
     private OnFragmentInteractionListener mListener;

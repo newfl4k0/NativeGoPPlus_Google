@@ -12,7 +12,7 @@
         android:id="@+id/vehicleImage"
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:contentDescription="Vehicle Type"
+        android:contentDescription="@string/vehicle_type"
         android:src="@mipmap/vehiclered" />
 
 
@@ -20,7 +20,7 @@
         android:id="@+id/vehicleType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="..."
+        android:text="@string/uno"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
@@ -37,21 +37,21 @@
             android:id="@+id/startPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Base: $0"
+            android:text="@string/base_0"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/timePrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Minuto: $0"
+            android:text="@string/minuto_0"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/kmPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Km: $0"
+            android:text="@string/km_0"
             android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

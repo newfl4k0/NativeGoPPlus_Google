@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="@id/container"
             android:textColor="@color/black"/>
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/codeField"
             style="@style/EditText_White"
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginTop="16dp"
-            android:hint="Código"
+            android:hint="@string/placeholdercodigo"
             android:inputType="text"
             android:maxLength="10"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,15 +60,15 @@
 
         <Button
             android:id="@+id/activateButton"
-            android:layout_height="wrap_content"
             style="@style/Button_Black"
-            app:layout_constraintTop_toBottomOf="@+id/codeField"
-            app:layout_constraintStart_toStartOf="@id/codeField"
-            app:layout_constraintEnd_toEndOf="@id/codeField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="ACTIVAR MI CUENTA"
             android:onClick="doActivate"
-            android:layout_width="match_parent" />
+            android:text="@string/activar_mi_cuenta"
+            app:layout_constraintEnd_toEndOf="@id/codeField"
+            app:layout_constraintStart_toStartOf="@id/codeField"
+            app:layout_constraintTop_toBottomOf="@+id/codeField" />
 
         <Button
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
             app:layout_constraintStart_toStartOf="@id/activateButton"
             app:layout_constraintEnd_toEndOf="@id/activateButton"
             android:layout_marginTop="16dp"
-            android:text="REENVIAR CÓDIGO"
+            android:text="@string/reenviar_cOdigo"
             android:onClick="doResend"
             android:layout_width="wrap_content" />
 

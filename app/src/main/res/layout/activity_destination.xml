@@ -8,15 +8,20 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:theme="@style/AppTheme.AppBarOverlay"
+        tools:layout_marginTop="0dp"
         tools:ignore="MissingConstraints">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bar_height"
             android:background="@mipmap/bgnavbar"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            tools:layout_marginLeft="0dp"
+            tools:layout_marginTop="0dp">
+
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="74dp"
@@ -50,7 +55,8 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/actionContainer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout="@layout/activity_destination" />
 
         <ImageView
             android:id="@+id/endPin"
@@ -61,7 +67,8 @@
             app:layout_constraintBottom_toBottomOf="@id/map"
             app:layout_constraintEnd_toEndOf="@id/map"
             app:layout_constraintStart_toStartOf="@id/map"
-            app:layout_constraintTop_toTopOf="@id/map" />
+            app:layout_constraintTop_toTopOf="@id/map"
+            android:contentDescription="@string/todo" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,7 +86,7 @@
                 android:id="@+id/priceValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¿A dónde te llevamos?"
+                android:text="@string/a_d_nde_te_llevamos"
                 android:textColor="@color/white"
                 android:textSize="10sp"
                 app:layout_constraintEnd_toEndOf="@id/pricePreviewContainer"
@@ -105,7 +112,8 @@
                 android:src="@mipmap/pinblanco"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="@string/todo" />
 
 
             <TextView
@@ -117,9 +125,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="10dp"
-                android:text="Origen: "/>
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/origen"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -129,48 +137,49 @@
             android:id="@+id/toLocation"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="42dp"
             android:background="@mipmap/bglocation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fromLocation">
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="20dp"
+                android:contentDescription="@string/todo"
                 android:src="@mipmap/pinblanco"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
+                android:id="@+id/toLocationText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="@color/white"
-                android:id="@+id/toLocationText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:text="Destino: "
-                android:onClick="doSearchLocation"/>
+                android:onClick="doSearchLocation"
+                android:text="@string/destino"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <ImageView
                 android:id="@+id/centerUserLocation"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:contentDescription="@string/todo"
+                android:onClick="doCenterLocation"
                 android:src="@mipmap/location"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:onClick="doCenterLocation"/>
-
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -187,13 +196,14 @@
                 android:layout_height="wrap_content"
                 android:background="@mipmap/redbuttondark"
                 android:fontFamily="@font/avenir_medium"
+                android:onClick="doCalculateFare"
                 android:orientation="vertical"
-                android:text="ESTIMAR COSTO"
+                android:text="@string/estimar_costo"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/actionContainer"
                 app:layout_constraintWidth_percent="0.5"
-                android:onClick="doCalculateFare"
                 tools:ignore="MissingConstraints" />
 
             <Button
@@ -202,13 +212,14 @@
                 android:layout_height="wrap_content"
                 android:background="@mipmap/redbutton"
                 android:fontFamily="@font/avenir_medium"
+                android:onClick="doRequest"
                 android:orientation="vertical"
-                android:text="SOLICITAR"
+                android:text="@string/solicitar"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/setupPriceButton"
                 app:layout_constraintWidth_percent="0.5"
-                android:onClick="doRequest"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -239,7 +250,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="CÓDIGO DE DESCUENTO"
+                    android:text="@string/c_digo_de_descuento"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@id/codeContainer"
@@ -251,7 +262,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Ninguno"
+                    android:text="@string/ninguno"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="@id/codeContainer"
                     app:layout_constraintStart_toStartOf="@id/codeContainer"
@@ -266,7 +277,7 @@
                 android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="@id/paymentContainer"
                 app:layout_constraintWidth_percent="0.5"
-                android:onClick="doOpenCreditCards">
+                android:onClick="doOpenMethodDecision">
 
                 <View
                     android:layout_width="match_parent"
@@ -279,7 +290,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="MÉTODO DE PAGO"
+                    android:text="@string/m_todo_de_pago"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@id/cardContainer"
@@ -291,7 +302,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Ninguna"
+                    android:text="@string/ninguna"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="@id/cardContainer"
                     app:layout_constraintStart_toStartOf="@id/cardContainer"
@@ -304,7 +315,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

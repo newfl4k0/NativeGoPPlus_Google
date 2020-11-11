@@ -11,7 +11,6 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.pplus.go.Data.Database;
-import app.GoPPlus.R;
 
 public class Discount extends AppCompatActivity {
 
@@ -20,14 +19,14 @@ public class Discount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         try {
             JSONObject user = new JSONObject(Database.Select(this, getResources().getString(R.string.db_user)));
-            ((TextView)findViewById(R.id.codeText)).setText(user.getString("codigo"));
+            ((TextView)findViewById(R.id.codeText)).setText(user.getString("codigo").toUpperCase());
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -22,7 +22,7 @@ import com.pplus.go.Data.Database;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
 import com.pplus.go.app.gopplus.Interfaces.ResponseInterface;
-import app.GoPPlus.R;
+import com.pplus.go.app.gopplus.R;
 
 public class APIRequest {
     private static RequestQueue queue;

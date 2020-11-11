@@ -51,11 +51,12 @@
             android:layout_marginRight="32dp"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:hint="Correo Electrónico"
+            android:hint="@string/correo_electr_nico"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:autofillHints="" />
 
         <Button
             android:id="@+id/sendCodeButton"
@@ -65,7 +66,7 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginTop="8dp"
-            android:text="Enviar código de autorización"
+            android:text="@string/enviar_c_digo_de_autorizaci_n"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailField"

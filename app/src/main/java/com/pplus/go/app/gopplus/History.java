@@ -24,12 +24,11 @@ import org.json.JSONObject;
 import com.pplus.go.API.APIRequest;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
-import app.GoPPlus.R;
 
 
 public class History extends AppCompatActivity {
 
-    private HistoryAdapter historyAdapter = new HistoryAdapter();
+    private final HistoryAdapter historyAdapter = new HistoryAdapter();
     private JSONArray history = new JSONArray();
     private ListView list;
     private Activity historyActivity = this;
@@ -39,10 +38,7 @@ public class History extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         historyActivity = this;
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
         list = findViewById(R.id.list);
         list.setAdapter(historyAdapter);
@@ -178,7 +174,7 @@ public class History extends AppCompatActivity {
                     points = String.valueOf(item.getDouble("lat_origen")) + "," + String.valueOf(item.getDouble("lng_origen"));
                 }
 
-                Glide.with(historyActivity).load("https://maps.googleapis.com/maps/api/staticmap?size=500x200&key=" + getResources().getString(R.string.apiKey) + "&sensor=false&path=" + points ).into(mapView);
+                Glide.with(historyActivity).load(getString(R.string.staticmapsuri) + getResources().getString(R.string.apiKey) + "&sensor=false&path=" + points ).into(mapView);
             } catch (JSONException ex) {
                 ex.printStackTrace();
             }

@@ -10,8 +10,10 @@
         android:id="@+id/chatImage"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:contentDescription="@string/l"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="8dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         app:layout_constraintStart_toEndOf="@id/chatImage"
@@ -38,12 +40,11 @@
             android:id="@+id/dateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
             android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/messageText"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/messageText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

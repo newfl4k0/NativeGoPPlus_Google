@@ -1,0 +1,78 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="200dp"
+    android:layout_marginStart="55dp"
+    android:layout_marginTop="225dp"
+    android:paddingBottom="40dp"
+    tools:context="com.pplus.go.app.gopplus.MethodDecission">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl1"
+        android:layout_width="match_parent"
+        android:layout_height="187dp">
+
+        <TextView
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="279dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/a_d_nde_te_llevamos"
+            android:text="@string/seleccionaunmetodo"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:textAlignment="center" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchMethod"
+            android:layout_width="244dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="29dp"
+            android:showText="true"
+            android:text="@string/EfectivoTarjeta"
+            android:textOff="@string/efectivo"
+            android:textOn="@string/Tarjeta"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+        <Button
+            android:id="@+id/btnOK"
+            style="@android:style/Widget.DeviceDefault.Light.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="28dp"
+            android:onClick="doMethodDecission"
+            android:text="@android:string/ok"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switchMethod" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            style="@android:style/Widget.DeviceDefault.Light.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="28dp"
+            android:onClick="doCancel"
+            android:text="@android:string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnOK"
+            app:layout_constraintTop_toBottomOf="@+id/switchMethod" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -21,6 +21,7 @@
         android:id="@+id/mapImage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:contentDescription="@string/pp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statusText" />
@@ -51,41 +52,41 @@
             app:layout_constraintTop_toBottomOf="@+id/driverText" />
 
         <ImageView
+            android:id="@+id/pin"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@mipmap/pin"
-            android:id="@+id/pin"
             android:layout_marginTop="8dp"
+            android:background="@mipmap/pin"
+            android:contentDescription="@string/lol"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/carText"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/carText" />
 
         <TextView
             android:id="@+id/startText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/pin"
             app:layout_constraintTop_toBottomOf="@+id/carText" />
 
         <ImageView
+            android:id="@+id/flag"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@mipmap/flag"
-            android:id="@+id/flag"
             android:layout_marginTop="8dp"
+            android:background="@mipmap/flag"
+            android:contentDescription="@string/y"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/startText"
-            android:contentDescription="" />
+            app:layout_constraintTop_toBottomOf="@+id/startText" />
 
         <TextView
             android:id="@+id/endText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/flag"
             app:layout_constraintTop_toBottomOf="@+id/startText" />

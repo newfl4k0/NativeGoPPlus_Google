@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.pplus.go.app.gopplus.">
+    tools:context="com.pplus.go.app.gopplus.Onboard">
 
     <WebView
         android:id="@+id/webView"
@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="24dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             />
 
         <TextView
@@ -77,10 +77,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/green"
-                android:text="ESTATUS"
+                android:text="@string/estatus"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                tools:ignore="MissingConstraints" />
 
             <Button
                 android:layout_width="30dp"
@@ -88,7 +89,7 @@
                 android:id="@+id/centerLocation"
                 android:background="@mipmap/location"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -105,19 +106,20 @@
                 android:id="@+id/driverImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:contentDescription="@string/mmml"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"  />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:layout_marginTop="8dp"
                 android:id="@+id/starIcon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
                 android:background="@mipmap/iconstaryellow"
-                app:layout_constraintTop_toBottomOf="@id/driverImage"
+                android:contentDescription="@string/bnbn9"
                 app:layout_constraintStart_toStartOf="@id/driverImage"
-                android:layout_marginLeft="10dp"
-                />
+                app:layout_constraintTop_toBottomOf="@id/driverImage" />
 
             <TextView
                 android:id="@+id/driverRating"
@@ -126,16 +128,16 @@
                 app:layout_constraintTop_toTopOf="@id/starIcon"
                 app:layout_constraintBottom_toBottomOf="@id/starIcon"
                 app:layout_constraintStart_toEndOf="@id/starIcon"
-                android:text="5"
+                android:text="@string/_5"
                 android:textSize="18sp"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/driverNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DRIVER NAME"
+                android:text="@string/driver_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -145,7 +147,7 @@
                 android:id="@+id/carText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MAKE /MODEL"
+                android:text="@string/make_model"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/darkgray"
                 app:layout_constraintTop_toBottomOf="@+id/driverNameText"
@@ -155,7 +157,7 @@
                 android:id="@+id/extracarText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LIC /COLOR / PLATE"
+                android:text="@string/lic_color_plate"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/darkgray"
                 app:layout_constraintTop_toBottomOf="@+id/carText"
@@ -165,7 +167,7 @@
                 android:id="@+id/kmText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="KM"
+                android:text="@string/km"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/darkgray"
                 app:layout_constraintTop_toBottomOf="@+id/extracarText"
@@ -189,7 +191,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/cancelServiceButton"
                 app:layout_constraintTop_toBottomOf="@+id/kmText"
                 app:layout_constraintTop_toTopOf="@+id/cancelServiceButton"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

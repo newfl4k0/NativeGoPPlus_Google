@@ -21,7 +21,6 @@ import java.util.Locale;
 
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.Utils.Utils;
-import app.GoPPlus.R;
 
 public class Location extends AppCompatActivity {
     static final int SUCCESS = 1;

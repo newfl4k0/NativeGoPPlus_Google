@@ -37,7 +37,7 @@ import com.pplus.go.Utils.Utils;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.FragmentTransaction;
-import app.GoPPlus.R;
+
 
 public class Map extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Onrequest.OnFragmentInteractionListener {
     NavigationView navigationView;
@@ -209,9 +209,9 @@ public class Map extends AppCompatActivity implements NavigationView.OnNavigatio
          * Replace Toolbar
          */
         Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /**
          * Setup Navigation Drawer

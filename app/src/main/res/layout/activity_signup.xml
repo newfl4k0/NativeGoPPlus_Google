@@ -44,7 +44,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
 
             android:paddingBottom="32dp">
 
@@ -64,7 +64,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@mipmap/redbutton"
                 android:onClick="doFacebookLogin"
-                android:text="Facebook"
+                android:text="@string/facebook"
                 android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Ó"
+                android:text="@string/o"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -89,15 +89,15 @@
                 android:layout_marginRight="32dp"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
-                android:editable="false"
                 android:ems="10"
-                android:focusable="false"
-                android:hint="Fecha de cumpleaños"
+                android:focusable="true"
+                android:hint="@string/fecha_de_cumplea_os"
                 android:inputType="textPersonName"
                 android:onClick="doOpenCalendar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                android:autofillHints="" />
 
             <EditText
                 android:id="@+id/nameField"
@@ -106,21 +106,23 @@
                 android:layout_marginRight="32dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
-                android:hint="Nombre"
+                android:hint="@string/nombre"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/birthField" />
+                app:layout_constraintTop_toBottomOf="@+id/birthField"
+                android:autofillHints="" />
 
             <EditText
                 android:id="@+id/phoneField"
                 style="@style/EditText_White"
                 android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="32dp"
+                android:autofillHints=""
                 android:ems="10"
-                android:hint="Teléfono"
-                android:inputType="number"
+                android:hint="@string/tel_fono"
+                android:inputType="number|phone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nameField" />
@@ -129,11 +131,12 @@
                 android:id="@+id/emailField"
                 style="@style/EditText_White"
                 android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="32dp"
+                android:autofillHints=""
                 android:ems="10"
-                android:hint="Correo Electrónico"
-                android:inputType="textPersonName"
+                android:hint="@string/correo_electr_nico"
+                android:inputType="textWebEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/phoneField" />
@@ -145,11 +148,12 @@
                 android:layout_marginRight="32dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
-                android:hint="Contraseña"
+                android:hint="@string/contrase_a"
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailField" />
+                app:layout_constraintTop_toBottomOf="@+id/emailField"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/passwordText"
@@ -159,7 +163,7 @@
                 android:layout_marginRight="32dp"
                 android:layout_marginTop="8dp"
                 android:background="@android:color/transparent"
-                android:text="Mínimo 8 caracteres, máximo 16\nLa contraseña debe contener mínimo: una letra mayúscula, una minúscula, un carácter especial y números.\nNo debe contener acentos ni los siguientes caracteres \u003C\u003E"
+                android:text="@string/m_nimo_8_caracteres_m_ximo_16_nla_contrase_a_debe_contener_m_nimo_una_letra_may_scula_una_min_scula_un_car_cter_especial_y_n_meros_nno_debe_contener_acentos_ni_los_siguientes_caracteres_u003c_u003e"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -171,7 +175,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="ACEPTO LOS TÉRMINOS Y CONDICIONES"
+                android:text="@string/acepto_los_t_rminos_y_condiciones"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -186,7 +190,7 @@
                 android:layout_marginTop="4dp"
                 android:background="@color/gray"
                 android:onClick="doAccept"
-                android:text=" "
+                android:text="@string/acepto"
                 app:layout_constraintEnd_toStartOf="@+id/acceptText"
                 app:layout_constraintTop_toBottomOf="@+id/passwordText" />
 
@@ -195,7 +199,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="doOpenTermsAndConditions"
-                android:text="Leer Términos y Condiciones"
+                android:text="@string/leer_t_rminos_y_condiciones"
                 app:layout_constraintEnd_toEndOf="@+id/acceptText"
                 app:layout_constraintStart_toStartOf="@+id/acceptText"
                 app:layout_constraintTop_toBottomOf="@+id/acceptText" />
@@ -208,7 +212,7 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginTop="16dp"
-                android:text="Listo"
+                android:text="@string/listo"
                 app:layout_constraintEnd_toEndOf="@+id/facebookButton"
                 app:layout_constraintStart_toStartOf="@+id/facebookButton"
                 app:layout_constraintTop_toBottomOf="@+id/readTermsText"

@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,13 +47,11 @@ import com.pplus.go.API.APIRequest;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.app.gopplus.Interfaces.AlertInterface;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
-import app.GoPPlus.R;
 
 
 public class Onboard extends Fragment implements OnMapReadyCallback {
 
     private final static String LCAT = "ONBOARD";
-
 
     private ConstraintLayout waitContainer;
     private ConstraintLayout dataContainer;

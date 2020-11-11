@@ -17,7 +17,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import com.pplus.go.Utils.Utils;
-import app.GoPPlus.R;
+import com.pplus.go.app.gopplus.R;
 
 
 public final class Database {

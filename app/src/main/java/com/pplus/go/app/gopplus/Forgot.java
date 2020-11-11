@@ -18,7 +18,6 @@ import com.pplus.go.API.APIRequest;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
-import app.GoPPlus.R;
 
 
 public class Forgot extends AppCompatActivity {
@@ -30,9 +29,9 @@ public class Forgot extends AppCompatActivity {
         setContentView(R.layout.activity_forgot);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         forgotActivity = this;
         APIRequest.setQueue(this);
     }

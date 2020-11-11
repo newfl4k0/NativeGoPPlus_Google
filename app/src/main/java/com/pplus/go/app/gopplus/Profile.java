@@ -35,7 +35,7 @@ import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.Utils.PermissionUtils;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
-import app.GoPPlus.R;
+import com.pplus.go.app.gopplus.R;
 
 public class Profile extends AppCompatActivity {
 

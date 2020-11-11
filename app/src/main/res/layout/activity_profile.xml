@@ -49,14 +49,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
-            android:onClick="doTakePicture"/>
+            android:onClick="doTakePicture"
+            android:contentDescription="@string/todo" />
 
 
         <TextView
             android:id="@+id/updateImageText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Da click en la imagen para cambiar"
+            android:text="@string/da_click_en_la_imagen_para_cambiar"
             android:textColor="@color/gray"
             android:textSize="12sp"
             app:layout_constraintTop_toBottomOf="@id/profileImage"
@@ -66,21 +67,22 @@
 
         <EditText
             android:id="@+id/birthField"
+            style="@style/EditText_White"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            app:layout_constraintTop_toBottomOf="@id/updateImageText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            style="@style/EditText_White"
-            android:hint="Fecha de cumpleaños"
-            android:onClick="doOpenCalendar"
+            android:autofillHints=""
             android:clickable="true"
-            android:editable="false"
             android:ems="10"
-            />
+            android:focusable="true"
+            android:hint="@string/fecha_de_cumplea_os"
+            android:inputType="text"
+            android:onClick="doOpenCalendar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/updateImageText" />
 
         <EditText
             android:id="@+id/nameField"
@@ -93,9 +95,9 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             style="@style/EditText_White"
-            android:hint="Nombre"
+            android:hint="@string/nombre"
             android:inputType="textPersonName"
-            />
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/emailField"
@@ -108,24 +110,24 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             style="@style/EditText_White"
-            android:hint="Correo electrónico"
+            android:hint="@string/correo_electronico"
             android:inputType="textEmailAddress"
-            />
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/phoneField"
+            style="@style/EditText_White"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            app:layout_constraintTop_toBottomOf="@id/emailField"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
-            style="@style/EditText_White"
-            android:hint="Teléfono"
-            android:inputType="number"
-            />
+            android:autofillHints=""
+            android:hint="@string/tel_fono"
+            android:inputType="text|phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emailField" />
 
 
         <Button
@@ -136,7 +138,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
-            android:text="ACTUALIZAR DATOS"
+            android:text="@string/actualizar_datos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/phoneField"
@@ -150,7 +152,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
-            android:text="ACTUALIZAR CONTRASEÑA"
+            android:text="@string/actualizar_contrase_a"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/updateButton"

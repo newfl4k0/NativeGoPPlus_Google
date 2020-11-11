@@ -1,5 +1,6 @@
 package com.pplus.go.app.gopplus;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Handler;
@@ -26,13 +27,13 @@ import com.pplus.go.API.APIRequest;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
-import app.GoPPlus.R;
+
 
 public class Chat extends AppCompatActivity {
 
     private Activity chatActivity;
     private Handler chatTimer;
-    private ChatAdapter chatAdapter = new ChatAdapter();
+    private final ChatAdapter chatAdapter = new ChatAdapter();
     private ListView list;
     private JSONArray messages;
     private EditText messageText;
@@ -42,10 +43,10 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        /*setSupportActionBar(toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         chatActivity = this;
         messages = new JSONArray();
@@ -53,7 +54,7 @@ public class Chat extends AppCompatActivity {
         list = findViewById(R.id.list);
         list.setAdapter(chatAdapter);
 
-        messageText = ((EditText) findViewById(R.id.messageText));
+        messageText = findViewById(R.id.messageText);
 
         getChatLoop();
     }
@@ -63,11 +64,7 @@ public class Chat extends AppCompatActivity {
         getChat();
 
         chatTimer.postDelayed(
-                new Runnable() {
-                    public void run() {
-                        getChatLoop();
-                    }
-                },
+                this::getChatLoop,
                 1000 * 10);
     }
 
@@ -117,9 +114,9 @@ public class Chat extends AppCompatActivity {
         int driverId   = getIntent().getExtras().getInt("driverId");
         String message = messageText.getText().toString();
 
-        if (RegexValidator.validateRequired(message) == false) {
+        if (!RegexValidator.validateRequired(message)) {
             Utils.showAlert(chatActivity, RegexValidator.replaceMessage( RegexValidator.message_required, "Mensaje"));
-        } else if (RegexValidator.isText(message) == false) {
+        } else if (!RegexValidator.isText(message)) {
             Utils.showAlert(chatActivity, RegexValidator.replaceMessage( RegexValidator.message_valid_text, "Mensaje"));
         } else {
             final ProgressDialog dialog = Utils.getProgressDialog(chatActivity, getResources().getString(R.string.defaultProgress));
@@ -168,6 +165,7 @@ public class Chat extends AppCompatActivity {
             return i;
         }
 
+        @SuppressLint("InflateParams")
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             try {

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="app.GoPPlus" >
+    package="com.pplus.go.app.gopplus" >
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -48,6 +48,7 @@
         <activity android:name="com.pplus.go.app.gopplus.PromoCode" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.pplus.go.app.gopplus.Rate" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.pplus.go.app.gopplus.Chat" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.pplus.go.app.gopplus.MethodDecission" android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.FireBase.messaging.default_notification_icon"

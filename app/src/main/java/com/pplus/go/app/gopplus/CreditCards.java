@@ -33,12 +33,12 @@ import com.pplus.go.Data.Database;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
-import app.GoPPlus.R;
+
 
 
 public class CreditCards extends AppCompatActivity {
 
-    private CardAdapter cardAdapter = new CardAdapter();
+    private final CardAdapter cardAdapter = new CardAdapter();
     private JSONArray cards = new JSONArray();
     private ListView list;
 
@@ -63,10 +63,7 @@ public class CreditCards extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creditcards);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        /*setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        Toolbar toolbar = findViewById(R.id.toolbar);
         creditCardActivity = this;
 
         list = findViewById(R.id.list);
@@ -200,7 +197,7 @@ public class CreditCards extends AppCompatActivity {
                 error += "\n" + RegexValidator.replaceMessage(RegexValidator.message_required, "Año");
             }
 
-            if (Integer.valueOf(startYear + yearText) < Integer.valueOf(currentYear)) {
+            if (Integer.parseInt(startYear + yearText) < Integer.parseInt(currentYear)) {
                 error += "\n" + "Verifica el año ingresado";
             }
 
@@ -217,7 +214,7 @@ public class CreditCards extends AppCompatActivity {
                 String exp  = Database.encrypt64( monthText + "" + yearText, getResources().getString(R.string.secret));
                 String cvv  = Database.encrypt64(cvvText, getResources().getString(R.string.secret));
                 String id   = Database.encrypt64(String.valueOf(Database.getUserClientId(this)), getResources().getString(R.string.secret));
-                String url  = getResources().getString(R.string.apiPayment) + "card-service-start-?y=" + id + "&i=" + card + "&f=" + exp + "&a=" + cvv;
+                String url  = getResources().getString(R.string.apiPayment) + "card-service-start?y=" + id + "&i=" + card + "&f=" + exp + "&a=" + cvv;
 
 
                 setWebviewVisible(true);

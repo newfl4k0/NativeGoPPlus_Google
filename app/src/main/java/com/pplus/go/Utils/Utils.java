@@ -16,7 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.io.ByteArrayOutputStream;
 
-import app.GoPPlus.R;
+import com.pplus.go.app.gopplus.R;
 import com.pplus.go.app.gopplus.Interfaces.AlertInterface;
 
 public final class Utils {

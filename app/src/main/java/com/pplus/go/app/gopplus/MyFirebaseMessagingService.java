@@ -23,7 +23,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
-import app.GoPPlus.R;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
