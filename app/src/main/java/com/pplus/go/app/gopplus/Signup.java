@@ -66,9 +66,9 @@ public class Signup extends AppCompatActivity {
         signupActivity = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        /*setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         APIRequest.setQueue(this);
 

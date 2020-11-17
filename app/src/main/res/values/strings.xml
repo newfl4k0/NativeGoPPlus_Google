@@ -37,7 +37,7 @@
     <string name="fb_login_protocol_scheme">fb2328732394056096</string>
     <string name="apiKey">AIzaSyBHLzjH7LEnHdjUlTaRrDBpLjOIsyqTTIs</string>
     <string name="default_notification_channel_id">default</string>
-    <string name="version_name">GoPPlus 1.0.0.64</string>
+    <string name="version_name">GoPPlus 1.0.100</string>
     <string name="placeholdercodigo">Código</string>
     <string name="activar_mi_cuenta">ACTIVAR MI USUARIO</string>
     <string name="reenviar_cOdigo">REENVIAR CÓDIGO</string>

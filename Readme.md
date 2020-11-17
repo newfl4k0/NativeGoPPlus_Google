@@ -2,7 +2,6 @@
 
 Native Android GoPPlus Client
 
-- Lollipop+ 
-- Push 
-- Cambios Dic 2019 - Ene 2020 (Google Directions)
-- AndroidX compat
+- Push
+- Cambios Nov 2020 (Google Directions/PathEfectivo)
+- Android 7,8,9,Q compat
