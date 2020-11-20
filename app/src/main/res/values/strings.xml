@@ -37,7 +37,7 @@
     <string name="fb_login_protocol_scheme">fb2328732394056096</string>
     <string name="apiKey">AIzaSyBHLzjH7LEnHdjUlTaRrDBpLjOIsyqTTIs</string>
     <string name="default_notification_channel_id">default</string>
-    <string name="version_name">GoPPlus 1.0.100</string>
+    <string name="version_name">GoPPlus 1.0.101</string>
     <string name="placeholdercodigo">Código</string>
     <string name="activar_mi_cuenta">ACTIVAR MI USUARIO</string>
     <string name="reenviar_cOdigo">REENVIAR CÓDIGO</string>
@@ -74,7 +74,7 @@
     <string name="nueva_contrase_a">Nueva contraseña</string>
     <string name="confirmar_nueva_contrase_a">Confirmar nueva contraseña</string>
     <string name="da_click_en_la_imagen_para_cambiar">Da click en la imagen para cambiar</string>
-    <string name="fecha_de_cumplea_os">Fecha de cumpleaños</string>
+    <string name="fecha_de_cumplea_os">Fecha de nacimiento</string>
     <string name="nombre">Nombre</string>
     <string name="correo_electronico">Correo electrónico</string>
     <string name="tel_fono">Teléfono</string>
@@ -88,7 +88,7 @@
     <string name="leer_t_rminos_y_condiciones">Leer Términos y Condiciones</string>
     <string name="o">Ó</string>
     <string name="facebook">Facebook</string>
-    <string name="m_nimo_8_caracteres_m_ximo_16_nla_contrase_a_debe_contener_m_nimo_una_letra_may_scula_una_min_scula_un_car_cter_especial_y_n_meros_nno_debe_contener_acentos_ni_los_siguientes_caracteres_u003c_u003e"><![CDATA[Mínimo 8 caracteres, máximo 16\nLa contraseña debe contener mínimo: una letra mayúscula, una minúscula, un carácter especial y números.\nNo debe contener acentos ni los siguientes caracteres <>]]></string>
+    <string name="m_nimo_8_caracteres_m_ximo_16_nla_contrase_a_debe_contener_m_nimo_una_letra_may_scula_una_min_scula_un_car_cter_especial_y_n_meros_nno_debe_contener_acentos_ni_los_siguientes_caracteres_u003c_u003e"><![CDATA[Mínimo 8 caracteres, máximo 16. La contraseña debe contener min.: una letra mayúscula, una minúscula, un caracter especial y un número. No debe contener acentos, ni los siguientes caracteres: <>]]></string>
     <string name="acepto_los_t_rminos_y_condiciones">ACEPTO LOS TÉRMINOS Y CONDICIONES</string>
     <string name="acepto">ACEPTO LOS TÉRMINOS Y CONDICIONES</string>
     <string name="siguiente">SIGUIENTE</string>
@@ -110,7 +110,7 @@
     <string name="_5">5</string>
     <string name="make_model">MAKE /MODEL</string>
     <string name="driver_name">DRIVER NAME</string>
-    <string name="lic_color_plate">LIC /COLOR / PLATE</string>
+    <string name="lic_color_plate">LIC / PLATE</string>
     <string name="km">KM</string>
     <string name="mmml">mmm</string>
     <string name="bnbn9">bnbn</string>
@@ -119,7 +119,7 @@
     <string name="perfil">Perfil</string>
     <string name="viajes_gratis2">Viajes Gratis</string>
     <string name="t_rminos_y_condiciones">Términos y condiciones</string>
-    <string name="version">1.0.70</string>
+    <string name="version">1.0.101</string>
     <string name="actualizar_contrase_a">Actualizar Contraseña</string>
     <string name="refresh">Refresh</string>
     <string name="EfectivoTarjeta">Efectivo/Tarjeta</string>
@@ -128,4 +128,5 @@
     <string name="efectivo">Efectivo</string>
     <string name="seleccionaunmetodo">Selecciona un Método de Pago:</string>
     <string name="Ninguno">Ninguno</string>
+    <string name="confirmacioncontra">Confirmación de Contraseña</string>
 </resources>

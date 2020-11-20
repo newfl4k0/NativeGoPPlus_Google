@@ -75,7 +75,7 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
     private JSONObject fare;
     private JSONObject promoCode;
     private JSONObject creditCard;
-    private final float zoom = 20.0f;
+    private final float zoom = 16.0f;
     private double estimatedDistance = 0;
     private double estimated;
     private LocationManager locationManager;

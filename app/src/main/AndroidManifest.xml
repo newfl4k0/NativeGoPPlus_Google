@@ -18,8 +18,8 @@
         tools:ignore="AllowBackup">
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/apiKey" />
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id" />
-        <activity android:name="com.facebook.FacebookActivity" android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="@string/app_name" />
-        <activity android:name="com.facebook.CustomTabActivity" android:exported="true">
+        <activity android:name="com.facebook.FacebookActivity" android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="@string/app_name" android:screenOrientation="portrait"/>
+        <activity android:name="com.facebook.CustomTabActivity" android:exported="true" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -27,28 +27,28 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name="com.pplus.go.app.gopplus.Login" android:theme="@style/AppTheme.Launcher">
+        <activity android:name="com.pplus.go.app.gopplus.Login" android:theme="@style/AppTheme.Launcher" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.pplus.go.app.gopplus.Map" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Signup" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Forgot" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Restore" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Activation" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Discount" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.History" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Profile" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Location" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Password" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Destination" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.CreditCards" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.PromoCode" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Rate" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.Chat" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.pplus.go.app.gopplus.MethodDecission" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.pplus.go.app.gopplus.Map" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Signup" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Forgot" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Restore" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Activation" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Discount" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.History" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Profile" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Location" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Password" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Destination" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.CreditCards" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.PromoCode" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Rate" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.Chat" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name="com.pplus.go.app.gopplus.MethodDecission" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.google.FireBase.messaging.default_notification_icon"

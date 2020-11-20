@@ -37,9 +37,9 @@ public class Location extends AppCompatActivity {
         setContentView(R.layout.activity_location);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         list = findViewById(R.id.list);
         searchEditText = findViewById(R.id.searchText);

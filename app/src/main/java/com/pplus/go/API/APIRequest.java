@@ -89,12 +89,9 @@ public class APIRequest {
                     Log.d("RESPONSE", response.toString());
                     listener.Success(response);
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("ERROR", error.toString());
-                    listener.Error(error);
-                }
+            }, error -> {
+                Log.d("ERROR", error.toString());
+                listener.Error(error);
             }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {

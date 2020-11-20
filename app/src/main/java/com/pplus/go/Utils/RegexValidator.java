@@ -53,6 +53,7 @@ public final class RegexValidator {
     public static String message_valid_zip_code     = "El campo %s debe contener un código postal válido.";
     public static String message_name               = "El campo %s no es un nombre válido.";
     public static String message_valid_password     = "El campo %s no es una contraseña válida. Mínimo 8 caracteres, máximo 16. Debe contener mínimo: una letra mayúscula, una minúscula, un caracter especial y números. No debe contener acentos ni los siguientes caracteres <>";
+    public static String message_valid_confirm      = "El campo %s no coincide con el campo Contraseña.";
     public static String message_valid_text         = "El campo %s no es un texto válido.";
     public static String message_valid_month        = "El campo %s no es un mes válido.";
     public static String message_valid_cvv          = "El valor %s no es un código de seguridad válido.";

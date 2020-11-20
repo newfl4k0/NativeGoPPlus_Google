@@ -21,6 +21,7 @@ android {
         applicationId "com.pplus.gos"
         minSdkVersion 24
         targetSdkVersion 30
+        multiDexEnabled true
         versionCode 100
         versionName '1.0.100'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

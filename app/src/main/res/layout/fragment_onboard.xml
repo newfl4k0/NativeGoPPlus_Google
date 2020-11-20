@@ -138,20 +138,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/driver_name"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textColor="@color/black"
+                android:textColor="@color/colorAccent"
                 android:textSize="16sp"
-                tools:ignore="MissingConstraints" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="8dp" />
 
             <TextView
                 android:id="@+id/carText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/make_model"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="MAKE/MODEL/COLOR"
                 android:textColor="@color/darkgray"
-                app:layout_constraintTop_toBottomOf="@+id/driverNameText"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/driverNameText" />
 
             <TextView
                 android:id="@+id/extracarText"
@@ -168,10 +169,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/km"
+                android:textColor="@color/white"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:textColor="@color/darkgray"
-                app:layout_constraintTop_toBottomOf="@+id/extracarText"
-                android:textSize="14sp" />
+                app:layout_constraintTop_toBottomOf="@+id/extracarText" />
 
             <Button
                 android:id="@+id/cancelServiceButton"

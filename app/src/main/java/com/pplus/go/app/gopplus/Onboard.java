@@ -42,6 +42,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.pplus.go.API.APIRequest;
 import com.pplus.go.Utils.Utils;
@@ -85,7 +86,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
     private Marker toMarker;
     private Marker carMarker;
     private Polyline routeLine;
-    private float zoom = 22.0f;
+    private float zoom = 16.0f;
     private boolean notificateArrival;
 
 
@@ -234,17 +235,14 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        ((Button) view.findViewById(R.id.centerLocation)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        view.findViewById(R.id.centerLocation).setOnClickListener(view1 -> {
 
-                try {
-                    if (serviceData != null && map != null) {
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(serviceData.getDouble("lat"), serviceData.getDouble("lng")), 20.0f));
-                    }
-                } catch (JSONException e){
-                    e.printStackTrace();
+            try {
+                if (serviceData != null && map != null) {
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(serviceData.getDouble("lat"), serviceData.getDouble("lng")), 16.0f));
                 }
+            } catch (JSONException e){
+                e.printStackTrace();
             }
         });
 
@@ -256,7 +254,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_onboard, container, false);
-        mapView = (MapView) view.findViewById(R.id.map);
+        mapView = view.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
@@ -316,11 +314,11 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
 
     private void setupServiceDataUI() {
         try {
-            Glide.with(getActivity()).load(driverImageUrl + String.valueOf(serviceData.getInt("id_conductor")) + ".jpg").apply(RequestOptions.circleCropTransform()).into(driverImage);
+            Glide.with(Objects.requireNonNull(getActivity())).load(driverImageUrl + String.valueOf(serviceData.getInt("id_conductor")) + ".jpg").apply(RequestOptions.circleCropTransform()).into(driverImage);
             driverRating.setText(String.valueOf(serviceData.getInt("calificacion")));
             driverNameText.setText(serviceData.getString("nombre"));
-            carText.setText(serviceData.getString("marca") + " "  + serviceData.getString("modelo"));
-            extracarText.setText(serviceData.getString("color") + " "  + serviceData.getString("placas"));
+            carText.setText(serviceData.getString("marca") + " "  + serviceData.getString("modelo") + " " + serviceData.getString("color"));
+            extracarText.setText(serviceData.getString("permiso")+ " "  + serviceData.getString("placas"));
             kmText.setText(String.valueOf(serviceData.getDouble("km")) + " km");
             serviceStatusText.setText(serviceData.getString("estatus_reserva_nombre"));
 

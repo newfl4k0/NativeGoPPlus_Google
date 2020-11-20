@@ -62,7 +62,7 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
     private boolean vehiclesHidden = false;
     private boolean rateViewOpen = false;
 
-    private float zoom = 22.0f;
+    private float zoom = 16.0f;
     private float swipeContainerY = 0;
 
     private JSONArray vehiclesByType;
@@ -237,17 +237,14 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
         gmap.moveCamera(CameraUpdateFactory.newLatLngZoom( new LatLng(21.122039, -101.667102), zoom));
         startLocationManager();
 
-        gmap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
-            @Override
-            public void onCameraIdle() {
+        gmap.setOnCameraIdleListener(() -> {
 
-                if (!pauseMapListener) {
-                    CameraPosition cameraPosition = gmap.getCameraPosition();
-                    Location location = new Location("");
-                    location.setLatitude(cameraPosition.target.latitude);
-                    location.setLongitude(cameraPosition.target.longitude);
-                    searchByLocation(location);
-                }
+            if (!pauseMapListener) {
+                CameraPosition cameraPosition = gmap.getCameraPosition();
+                Location location = new Location("");
+                location.setLatitude(cameraPosition.target.latitude);
+                location.setLongitude(cameraPosition.target.longitude);
+                searchByLocation(location);
             }
         });
     }

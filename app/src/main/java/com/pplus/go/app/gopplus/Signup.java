@@ -37,6 +37,7 @@ import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
 
+import kotlin.text.Regex;
 
 
 public class Signup extends AppCompatActivity {
@@ -54,6 +55,7 @@ public class Signup extends AppCompatActivity {
     EditText phoneField;
     EditText emailField;
     EditText passwordField;
+    EditText passwordField2;
     String birthDay = "";
     Boolean hasAccepted = false;
     Activity signupActivity;
@@ -79,12 +81,14 @@ public class Signup extends AppCompatActivity {
         phoneField = findViewById(R.id.phoneField);
         emailField = findViewById(R.id.emailField);
         passwordField = findViewById(R.id.passwordField);
+        passwordField2 = findViewById(R.id.passwordField2);
 
 
         facebookButton = (LoginButton) findViewById(R.id.fbLoginButton);
         facebookCustomButton = (Button) findViewById(R.id.facebookButton);
 
-        facebookButton.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday"));
+        //facebookButton.setReadPermissions(Arrays.asList("public_profile", "email"));
+        facebookButton.setPermissions(Arrays.asList("public_profile","email"));
         facebookButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -210,6 +214,7 @@ public class Signup extends AppCompatActivity {
             String phone = phoneField.getText().toString();
             final String email = emailField.getText().toString();
             final String password = passwordField.getText().toString();
+            final String password2 = passwordField2.getText().toString();
 
 
             if (!RegexValidator.validateRequired(birthDay)) {
@@ -248,10 +253,18 @@ public class Signup extends AppCompatActivity {
                 catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_required, "Contraseña");
             }
 
+            if (!RegexValidator.validateRequired(password2)) {
+                catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_required, "Confirmar Contraseña");
+            }
+
             if (!RegexValidator.isPassword(password)) {
                 catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_valid_password, "Contraseña");
             }
 
+            if (!password.equals(password2)) {
+                catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_valid_confirm, "Confirmar Contraseña");
+
+            }
 
             if (catchError.isEmpty()) {
                 final ProgressDialog dialog = Utils.getProgressDialog(signupActivity, "Espera un momento");

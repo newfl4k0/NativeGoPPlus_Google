@@ -48,6 +48,7 @@
                 android:layout_marginTop="8dp"
                 android:descendantFocusability="blocksDescendants"
                 android:divider="#00000000"
+                android:scrollbars="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/sendMessageContainer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
