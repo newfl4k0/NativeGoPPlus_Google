@@ -111,8 +111,6 @@ public class Signup extends AppCompatActivity {
                                 nameField.setFocusable(false);
                                 emailField.setEnabled(false);
                                 emailField.setFocusable(false);
-                                emailField2.setEnabled(false);
-                                emailField2.setFocusable(false);
                             }
                         } catch (JSONException exception) {
                             exception.printStackTrace();
@@ -120,8 +118,6 @@ public class Signup extends AppCompatActivity {
                             nameField.setFocusable(true);
                             emailField.setEnabled(true);
                             emailField.setFocusable(true);
-                            emailField2.setEnabled(true);
-                            emailField2.setFocusable(true);
                         }
 
 
