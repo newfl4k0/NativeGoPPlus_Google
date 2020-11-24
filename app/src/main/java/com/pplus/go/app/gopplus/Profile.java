@@ -61,9 +61,9 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        /*setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         profileActivity = this;
 
@@ -285,14 +285,11 @@ public class Profile extends AppCompatActivity {
     public void doOpenCalendar(View view) {
         final Calendar calendar = Calendar.getInstance();
 
-        DatePickerDialog.OnDateSetListener datePickerDialog = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                calendar.set(i, i1, i2);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-                birthDay = simpleDateFormat.format(calendar.getTime());
-                birthField.setText(birthDay);
-            }
+        DatePickerDialog.OnDateSetListener datePickerDialog = (datePicker, i, i1, i2) -> {
+            calendar.set(i, i1, i2);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+            birthDay = simpleDateFormat.format(calendar.getTime());
+            birthField.setText(birthDay);
         };
 
         DatePickerDialog pickerDialog = new DatePickerDialog(Profile.this,

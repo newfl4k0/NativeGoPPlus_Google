@@ -85,11 +85,7 @@ public class Map extends AppCompatActivity implements NavigationView.OnNavigatio
 
                 if (updateProfile) {
                     loopServiceHandler.postDelayed(
-                            new Runnable() {
-                                public void run() {
-                                    loopService();
-                                }
-                            }, 1000 * 10);
+                            () -> loopService(), 1000 * 10);
                 }
             }
 

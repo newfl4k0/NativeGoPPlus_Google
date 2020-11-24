@@ -416,15 +416,12 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
                 error += "Selecciona una dirección destino diferente a la dirección origen\n";
             }
 
-           /* if (estimatedDistance < 100)
-                error += "Selecciona una dirección destino con más de 100mts de diferencia con la dirección origen\n";
-*/
             if (creditCard == null) {
                 if (creditCardText.getText().toString().toUpperCase().compareTo(DESTINATION_METHOD)==0) {
                     double preauthPrice = estimated * 2;
                     String preauthValue = Database.Select(destinationActivity, "PreautorizacionTarifa");
 
-                    if (preauthValue.isEmpty() == false) {
+                    if (!preauthValue.isEmpty()) {
                         preauthPrice = Double.parseDouble(Database.Select(destinationActivity, "PreautorizacionTarifa"));
                     }
 

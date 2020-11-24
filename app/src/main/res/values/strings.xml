@@ -128,5 +128,5 @@
     <string name="efectivo">Efectivo</string>
     <string name="seleccionaunmetodo">Selecciona un Método de Pago:</string>
     <string name="Ninguno">Ninguno</string>
-    <string name="confirmacioncontra">Confirmación de Contraseña</string>
+    <string name="confirmacioncontra">Confirmación de Correo Electrónico</string>
 </resources>

@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
@@ -284,6 +285,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
 
         try {
             serviceData = service;
+            AlertDialog adC = null;
 
             if (service != null) {
                 int driverId = service.getInt("id_conductor");
@@ -293,7 +295,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
                     waitTextView.setText("Buscando la unidad más cercana");
                     waitContainer.bringToFront();
                     isWaitingDriver = true;
-                    runCancelDialog();
+                    adC = runCancelDialog();
                 } else if (map == null || (estatusId != 4 && estatusId != 5)) {
                     waitTextView.setText(getActivity().getResources().getString(R.string.defaultProgress));
                     waitContainer.bringToFront();
@@ -304,7 +306,8 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
 
                     dataContainer.bringToFront();
                     isWaitingDriver = false;
-                    setupServiceDataUI();
+                    Utils.notshowCancelServiceDialog(adC);
+                setupServiceDataUI();
                 }
             }
         } catch (JSONException e) {
@@ -447,34 +450,36 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
         return poly;
     }
 
-    private void runCancelDialog() {
+    private androidx.appcompat.app.AlertDialog runCancelDialog() {
+        final androidx.appcompat.app.AlertDialog[] a = new androidx.appcompat.app.AlertDialog[1];
+
         new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        if( isWaitingDriver && !isDialogShown ){
-                            isDialogShown = true;
+                () -> {
+                    if( isWaitingDriver && !isDialogShown ){
+                        isDialogShown = true;
 
-                            Utils.showCancelServiceDialog(getActivity(), "No se encontraron unidades cercanas. ¿Desea seguir esperando?", new AlertInterface() {
-                                @Override
-                                public void Accept() {
-                                    isDialogShown = false;
-                                }
+                        a[0] = Utils.showCancelServiceDialog(getActivity(), "No se encontraron unidades cercanas. ¿Desea seguir esperando?", new AlertInterface() {
+                            @Override
+                            public void Accept() {
+                                isDialogShown = false;
+                            }
 
-                                @Override
-                                public void Cancel() {
-                                    try {
-                                        waitTextView.setText("Cancelando, espere un momento");
-                                        paymentWebView.loadUrl(cancelUrl + String.valueOf(serviceData.getInt("id")));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                            @Override
+                            public void Cancel() {
+                                try {
+                                    waitTextView.setText("Cancelando, espere un momento");
+                                    paymentWebView.loadUrl(cancelUrl + String.valueOf(serviceData.getInt("id")));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 },
                 1000 * 20);
+        return a[0];
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

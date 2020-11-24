@@ -27,11 +27,7 @@ public final class Utils {
         builder.setCancelable(true);
         builder.setPositiveButton(
                 "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                (dialog, id) -> dialog.cancel());
 
         builder.create().show();
     }
@@ -89,28 +85,31 @@ public final class Utils {
     }
 
 
-    public static void showCancelServiceDialog(Activity activity, String message, final AlertInterface alertInterface) {
+    public static AlertDialog showCancelServiceDialog(Activity activity, String message, final AlertInterface alertInterface) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog ad;
         builder.setMessage(message);
         builder.setCancelable(false);
         builder.setPositiveButton(
                 "Seguir Esperando",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        alertInterface.Accept();
-                    }
+                (dialog, id) -> {
+                    dialog.cancel();
+                    alertInterface.Accept();
                 });
 
-        builder.setNegativeButton("Cancelar Servicio", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-                alertInterface.Cancel();
-            }
+        builder.setNegativeButton("Cancelar Servicio", (dialogInterface, i) -> {
+            dialogInterface.cancel();
+            alertInterface.Cancel();
         });
 
-        builder.create().show();
+        ad=builder.create();
+        ad.show();
+        return ad;
+    }
+
+    public static void notshowCancelServiceDialog(AlertDialog ad) {
+        if (ad.isShowing())
+            ad.dismiss();
     }
 
 

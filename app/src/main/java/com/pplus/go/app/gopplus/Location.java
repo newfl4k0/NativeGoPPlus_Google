@@ -1,5 +1,6 @@
 package com.pplus.go.app.gopplus;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Address;
@@ -7,6 +8,7 @@ import android.location.Geocoder;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.Utils.Utils;
 
@@ -29,8 +36,14 @@ public class Location extends AppCompatActivity {
     EditText searchEditText;
     List<String> foundAddress = new ArrayList<String>();
     ArrayAdapter<String> adapter;
-    List<Address> addresses = null;
+    private List<Address> addresses = null;
+    private LocationRequest mLocationRequest;
+    private android.location.Location mLastLocation;
+    private FusedLocationProviderClient mFusedLocationClient;
+    private String city = "";
 
+
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,9 +71,32 @@ public class Location extends AppCompatActivity {
                 finish();
             }
         });
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, l -> {
+            if (l != null) {
+                Geocoder gc;
+                gc = new Geocoder(this,Locale.getDefault());
+                try {
+                    addresses = gc.getFromLocation(l.getLatitude(),l.getLongitude(),1);
+                    city = addresses.get(0).getLocality();
+                    //city= "";
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
         list.setAdapter(adapter);
         Utils.hideKeyboard(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mFusedLocationClient != null) {
+            mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+        }
     }
 
     @Override
@@ -70,14 +106,28 @@ public class Location extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    LocationCallback mLocationCallback = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+           super.onLocationResult(locationResult);
+           mLastLocation = locationResult.getLastLocation();
+            }
+        };
+
+
+    @SuppressLint("MissingPermission")
     public void searchLocation(View view) {
 
         String location = searchEditText.getText().toString();
         foundAddress.clear();
 
         if (RegexValidator.validateRequired(location) && location.length()<100 && RegexValidator.isText(location)) {
+
+
+            mFusedLocationClient.getLastLocation();
             Geocoder geocoder = new Geocoder(this.getApplicationContext(), Locale.getDefault());
-            location +=","+getResources().getString(R.string.ciudad);
+
+            location +=","+city;
             ProgressDialog dialog = Utils.getProgressDialog(this, getResources().getString(R.string.defaultProgress));
             dialog.show();
 

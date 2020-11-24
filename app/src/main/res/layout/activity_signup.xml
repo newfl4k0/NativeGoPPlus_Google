@@ -142,10 +142,25 @@
                 app:layout_constraintTop_toBottomOf="@+id/phoneField" />
 
             <EditText
+                android:id="@+id/emailField2"
+                style="@style/EditText_White"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="56dp"
+                android:layout_marginRight="32dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/confirmacioncontra"
+                android:inputType="textWebEmailAddress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneField" />
+
+            <EditText
                 android:id="@+id/passwordField"
                 style="@style/EditText_White"
                 android:layout_marginLeft="32dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="56dp"
                 android:layout_marginRight="32dp"
                 android:autofillHints=""
                 android:ems="10"
@@ -156,20 +171,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/emailField" />
 
             <TextView
-                android:id="@+id/passwordText"
-                style="@style/EditText_White"
+                android:id="@+id/acceptText"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="56dp"
-                android:layout_marginRight="32dp"
-                android:background="@android:color/transparent"
-                android:text="@string/m_nimo_8_caracteres_m_ximo_16_nla_contrase_a_debe_contener_m_nimo_una_letra_may_scula_una_min_scula_un_car_cter_especial_y_n_meros_nno_debe_contener_acentos_ni_los_siguientes_caracteres_u003c_u003e"
-                android:textAlignment="gravity"
-                android:textColor="@color/black"
-                android:textSize="12sp"
+                android:layout_marginTop="12dp"
+                android:text="@string/acepto_los_t_rminos_y_condiciones"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordField" />
+                app:layout_constraintTop_toBottomOf="@+id/passwordText" />
 
             <Button
                 android:id="@+id/acceptButton"
@@ -186,37 +196,13 @@
                 android:id="@+id/readTermsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:onClick="doOpenTermsAndConditions"
                 android:text="@string/leer_t_rminos_y_condiciones"
                 app:layout_constraintEnd_toEndOf="@+id/acceptText"
                 app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="@+id/acceptText"
                 app:layout_constraintTop_toBottomOf="@+id/acceptText" />
-
-            <TextView
-                android:id="@+id/acceptText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/acepto_los_t_rminos_y_condiciones"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordText" />
-
-            <EditText
-                android:id="@+id/passwordField2"
-                style="@style/EditText_White"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="32dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:hint="@string/confirmacioncontra"
-                android:inputType="textPassword"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordField" />
 
             <Button
                 android:id="@+id/signupButton"
@@ -229,9 +215,25 @@
                 android:onClick="doSignup"
                 android:text="@string/listo"
                 app:layout_constraintEnd_toEndOf="@+id/facebookButton"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/facebookButton"
                 app:layout_constraintTop_toBottomOf="@+id/readTermsText" />
+
+            <TextView
+                android:id="@+id/passwordText"
+                style="@style/EditText_White"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="32dp"
+                android:background="@android:color/transparent"
+                android:text="@string/m_nimo_8_caracteres_m_ximo_16_nla_contrase_a_debe_contener_m_nimo_una_letra_may_scula_una_min_scula_un_car_cter_especial_y_n_meros_nno_debe_contener_acentos_ni_los_siguientes_caracteres_u003c_u003e"
+                android:textAlignment="gravity"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordField" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -55,7 +55,7 @@ public class Signup extends AppCompatActivity {
     EditText phoneField;
     EditText emailField;
     EditText passwordField;
-    EditText passwordField2;
+    EditText emailField2;
     String birthDay = "";
     Boolean hasAccepted = false;
     Activity signupActivity;
@@ -81,13 +81,12 @@ public class Signup extends AppCompatActivity {
         phoneField = findViewById(R.id.phoneField);
         emailField = findViewById(R.id.emailField);
         passwordField = findViewById(R.id.passwordField);
-        passwordField2 = findViewById(R.id.passwordField2);
+        emailField2 = findViewById(R.id.emailField2);
 
 
         facebookButton = (LoginButton) findViewById(R.id.fbLoginButton);
         facebookCustomButton = (Button) findViewById(R.id.facebookButton);
 
-        //facebookButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         facebookButton.setPermissions(Arrays.asList("public_profile","email"));
         facebookButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -112,6 +111,8 @@ public class Signup extends AppCompatActivity {
                                 nameField.setFocusable(false);
                                 emailField.setEnabled(false);
                                 emailField.setFocusable(false);
+                                emailField2.setEnabled(false);
+                                emailField2.setFocusable(false);
                             }
                         } catch (JSONException exception) {
                             exception.printStackTrace();
@@ -119,6 +120,8 @@ public class Signup extends AppCompatActivity {
                             nameField.setFocusable(true);
                             emailField.setEnabled(true);
                             emailField.setFocusable(true);
+                            emailField2.setEnabled(true);
+                            emailField2.setFocusable(true);
                         }
 
 
@@ -214,7 +217,7 @@ public class Signup extends AppCompatActivity {
             String phone = phoneField.getText().toString();
             final String email = emailField.getText().toString();
             final String password = passwordField.getText().toString();
-            final String password2 = passwordField2.getText().toString();
+            final String email2 = emailField2.getText().toString();
 
 
             if (!RegexValidator.validateRequired(birthDay)) {
@@ -253,16 +256,16 @@ public class Signup extends AppCompatActivity {
                 catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_required, "Contraseña");
             }
 
-            if (!RegexValidator.validateRequired(password2)) {
-                catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_required, "Confirmar Contraseña");
+            if (!RegexValidator.validateRequired(email2)) {
+                catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_required, "Confirmar Correo Electrónico");
             }
 
             if (!RegexValidator.isPassword(password)) {
                 catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_valid_password, "Contraseña");
             }
 
-            if (!password.equals(password2)) {
-                catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_valid_confirm, "Confirmar Contraseña");
+            if (!email.equals(email2)) {
+                catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_valid_confirm, "Confirmar Correo Electrónico");
 
             }
 
