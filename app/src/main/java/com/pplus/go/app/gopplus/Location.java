@@ -58,18 +58,15 @@ public class Location extends AppCompatActivity {
         searchEditText = findViewById(R.id.searchText);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, foundAddress);
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String[] addressText = addresses.get(i).getAddressLine(0).split(",");
-                Intent intent = new Intent();
+        list.setOnItemClickListener((adapterView, view, i, l) -> {
+            String[] addressText = addresses.get(i).getAddressLine(0).split(",");
+            Intent intent = new Intent();
 
-                intent.putExtra("address", addressText[0] + " " + addressText[1]);
-                intent.putExtra("latitude", addresses.get(i).getLatitude());
-                intent.putExtra("longitude", addresses.get(i).getLongitude());
-                setResult(SUCCESS, intent);
-                finish();
-            }
+            intent.putExtra("address", addressText[0] + " " + addressText[1]);
+            intent.putExtra("latitude", addresses.get(i).getLatitude());
+            intent.putExtra("longitude", addresses.get(i).getLongitude());
+            setResult(SUCCESS, intent);
+            finish();
         });
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, l -> {

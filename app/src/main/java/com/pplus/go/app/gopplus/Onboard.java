@@ -199,40 +199,32 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
         cancelUrl = getActivity().getResources().getString(R.string.apiPayment) + "postauth-service-start?act=CANCEL&id=";
         driverImageUrl = getActivity().getResources().getString(R.string.apiDriver) + "images/?id=";
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(view12 -> Utils.showCancelServiceDialog(getActivity(),
+                "Su unidad se encuentra en camino ¿Seguro de cancelar el servicio?", new AlertInterface() {
             @Override
-            public void onClick(View view) {
-                Utils.showCancelServiceDialog(getActivity(),
-                        "Su unidad se encuentra en camino ¿Seguro de cancelar el servicio?", new AlertInterface() {
-                    @Override
-                    public void Accept() {
-                    }
-
-                    @Override
-                    public void Cancel() {
-                        try {
-                            cancelProgressDialog.show();
-                            paymentWebView.loadUrl(cancelUrl + String.valueOf(serviceData.getInt("id")));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+            public void Accept() {
             }
-        });
 
-        chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void Cancel() {
                 try {
-                    chatIntent = new Intent(getActivity(), Chat.class);
-                    chatIntent.putExtra("id", serviceData.getInt("idd"));
-                    chatIntent.putExtra("driverId", serviceData.getInt("id_conductor"));
-                    startActivity(chatIntent);
+                    cancelProgressDialog.show();
+                    paymentWebView.loadUrl(cancelUrl + String.valueOf(serviceData.getInt("id")));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        }));
+
+        chatButton.setOnClickListener(view13 -> {
+
+            try {
+                chatIntent = new Intent(getActivity(), Chat.class);
+                chatIntent.putExtra("id", serviceData.getInt("idd"));
+                chatIntent.putExtra("driverId", serviceData.getInt("id_conductor"));
+                startActivity(chatIntent);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
 
@@ -258,7 +250,6 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
         mapView = view.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
-
         return view;
     }
 
@@ -269,7 +260,6 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onDetach() {
-        cancelProgressDialog.hide();
         super.onDetach();
     }
 
@@ -285,7 +275,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
 
         try {
             serviceData = service;
-            AlertDialog adC = null;
+            //AlertDialog adC = null;
 
             if (service != null) {
                 int driverId = service.getInt("id_conductor");
@@ -295,7 +285,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
                     waitTextView.setText("Buscando la unidad más cercana");
                     waitContainer.bringToFront();
                     isWaitingDriver = true;
-                    adC = runCancelDialog();
+                    runCancelDialog();
                 } else if (map == null || (estatusId != 4 && estatusId != 5)) {
                     waitTextView.setText(getActivity().getResources().getString(R.string.defaultProgress));
                     waitContainer.bringToFront();
@@ -306,7 +296,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
 
                     dataContainer.bringToFront();
                     isWaitingDriver = false;
-                    Utils.notshowCancelServiceDialog(adC);
+                    //Utils.notshowCancelServiceDialog(adC);
                 setupServiceDataUI();
                 }
             }
@@ -450,15 +440,13 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
         return poly;
     }
 
-    private androidx.appcompat.app.AlertDialog runCancelDialog() {
-        final androidx.appcompat.app.AlertDialog[] a = new androidx.appcompat.app.AlertDialog[1];
-
+    private void runCancelDialog() {
         new android.os.Handler().postDelayed(
                 () -> {
                     if( isWaitingDriver && !isDialogShown ){
                         isDialogShown = true;
 
-                        a[0] = Utils.showCancelServiceDialog(getActivity(), "No se encontraron unidades cercanas. ¿Desea seguir esperando?", new AlertInterface() {
+                        Utils.showCancelServiceDialog(getActivity(), "No se encontraron unidades cercanas. ¿Desea seguir esperando?", new AlertInterface() {
                             @Override
                             public void Accept() {
                                 isDialogShown = false;
@@ -469,6 +457,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
                                 try {
                                     waitTextView.setText("Cancelando, espere un momento");
                                     paymentWebView.loadUrl(cancelUrl + String.valueOf(serviceData.getInt("id")));
+                                    isDialogShown=false;
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -477,7 +466,6 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
                     }
                 },
                 1000 * 20);
-        return a[0];
     }
 
 

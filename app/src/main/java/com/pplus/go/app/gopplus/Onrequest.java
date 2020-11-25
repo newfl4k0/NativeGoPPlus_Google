@@ -45,6 +45,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import com.pplus.go.API.APIRequest;
 import com.pplus.go.Utils.Utils;
@@ -125,46 +126,34 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
         addVehicles();
 
 
-        swipeArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (vehiclesHidden) {
-                    showSwipeContainer();
-                } else {
-                    hideSwipeContainer();
-                }
+        swipeArrow.setOnClickListener(view13 -> {
+            if (vehiclesHidden) {
+                showSwipeContainer();
+            } else {
+                hideSwipeContainer();
             }
         });
 
-        (view.findViewById(R.id.userLocation)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        (view.findViewById(R.id.userLocation)).setOnClickListener(view14 -> {
 
-                if (gmap!= null && userLocation!= null) {
-                    gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), zoom));
-                }
-
-                startLocationManager();
+            if (gmap!= null && userLocation!= null) {
+                gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLocation.getLatitude(), userLocation.getLongitude()), zoom));
             }
+
+            startLocationManager();
         });
 
-        searchText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), com.pplus.go.app.gopplus.Location.class);
-                startActivityForResult(intent, CODE_LOCATION);
-            }
+        searchText.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), com.pplus.go.app.gopplus.Location.class);
+            startActivityForResult(intent, CODE_LOCATION);
         });
 
-        (getView().findViewById(R.id.openDestination)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (vehicleSelected != null && locationSelected != null && vehiclesHidden) {
-                    Intent intent = new Intent(getActivity(), Destination.class);
-                    intent.putExtra(Destination.DESTINATION_REQUEST_LOCATION, locationSelected.toString());
-                    intent.putExtra(Destination.DESTINATION_REQUEST_TYPE, vehicleSelected.toString());
-                    startActivityForResult(intent, Destination.DESTINATION_REQUEST_CODE);
-                }
+        (getView().findViewById(R.id.openDestination)).setOnClickListener(view12 -> {
+            if (vehicleSelected != null && locationSelected != null && vehiclesHidden) {
+                Intent intent = new Intent(getActivity(), Destination.class);
+                intent.putExtra(Destination.DESTINATION_REQUEST_LOCATION, locationSelected.toString());
+                intent.putExtra(Destination.DESTINATION_REQUEST_TYPE, vehicleSelected.toString());
+                startActivityForResult(intent, Destination.DESTINATION_REQUEST_CODE);
             }
         });
 
@@ -437,21 +426,18 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
 
     public void runSwipeContainer(float moveY){
         openDestinationButton.setEnabled(false);
-        getView().findViewById(R.id.swipeContainer).animate().translationY(moveY).withEndAction(new Runnable() {
-            @Override
-            public void run() {
+        Objects.requireNonNull(getView()).findViewById(R.id.swipeContainer).animate().translationY(moveY).withEndAction(() -> {
 
-                final Handler enableHandler = new Handler();
+            final Handler enableHandler = new Handler();
 
-                enableHandler.postDelayed(
-                        new Runnable() {
-                            public void run() {
-                                openDestinationButton.setEnabled(true);
-                                enableHandler.removeCallbacksAndMessages(null);
-                            }
-                        }, 3000);
+            enableHandler.postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            openDestinationButton.setEnabled(true);
+                            enableHandler.removeCallbacksAndMessages(null);
+                        }
+                    }, 3000);
 
-            }
         });
     }
 
@@ -496,11 +482,9 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
 
     private void getNearestVehiclesWait() {
         vehiclesTimer.postDelayed(
-                new Runnable() {
-                    public void run() {
-                        getNearestVehicles();
-                        vehiclesTimer.removeCallbacksAndMessages(null);
-                    }
+                () -> {
+                    getNearestVehicles();
+                    vehiclesTimer.removeCallbacksAndMessages(null);
                 },
                 1000 * 30);
     }
@@ -591,18 +575,16 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
 
     private void getUnratedServicesWait() {
         finishedServicesTimer.postDelayed(
-                new Runnable() {
-                    public void run() {
-                        getUnratedServices();
-                        finishedServicesTimer.removeCallbacksAndMessages(null);
-                    }
+                () -> {
+                    getUnratedServices();
+                    finishedServicesTimer.removeCallbacksAndMessages(null);
                 },
                 1000 * 30);
     }
 
     private void getUnratedServices() {
 
-        if (rateViewOpen == false) {
+        if (!rateViewOpen) {
             APIRequest.GetFinishedService(new RequestInterface() {
                 @Override
                 public void Success(JSONObject response) {
@@ -627,6 +609,8 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
                     getUnratedServicesWait();
                 }
             });
+        } else {
+            return;
         }
 
 

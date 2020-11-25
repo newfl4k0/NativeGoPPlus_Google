@@ -85,7 +85,7 @@ public final class Utils {
     }
 
 
-    public static AlertDialog showCancelServiceDialog(Activity activity, String message, final AlertInterface alertInterface) {
+    public static void showCancelServiceDialog(Activity activity, String message, final AlertInterface alertInterface) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         AlertDialog ad;
         builder.setMessage(message);
@@ -104,7 +104,6 @@ public final class Utils {
 
         ad=builder.create();
         ad.show();
-        return ad;
     }
 
     public static void notshowCancelServiceDialog(AlertDialog ad) {
