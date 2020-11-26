@@ -87,7 +87,6 @@ public final class Utils {
 
     public static void showCancelServiceDialog(Activity activity, String message, final AlertInterface alertInterface) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        AlertDialog ad;
         builder.setMessage(message);
         builder.setCancelable(false);
         builder.setPositiveButton(
@@ -102,14 +101,6 @@ public final class Utils {
             alertInterface.Cancel();
         });
 
-        ad=builder.create();
-        ad.show();
+        builder.create().show();
     }
-
-    public static void notshowCancelServiceDialog(AlertDialog ad) {
-        if (ad.isShowing())
-            ad.dismiss();
-    }
-
-
 }

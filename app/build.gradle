@@ -22,8 +22,8 @@ android {
         minSdkVersion 24
         targetSdkVersion 30
         multiDexEnabled true
-        versionCode 102
-        versionName '1.0.102'
+        versionCode 103
+        versionName '1.0.103'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
     }

@@ -8,7 +8,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
@@ -175,6 +174,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.contains("postauth-service-end")) {
                     waitTextView.setText("Espere un momento");
+                    cancelProgressDialog.hide();
                 } else if (url.contains("postauth-service-error")) {
                     try {
                         cancelProgressDialog.hide();
@@ -199,8 +199,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
         cancelUrl = getActivity().getResources().getString(R.string.apiPayment) + "postauth-service-start?act=CANCEL&id=";
         driverImageUrl = getActivity().getResources().getString(R.string.apiDriver) + "images/?id=";
 
-        cancelButton.setOnClickListener(view12 -> Utils.showCancelServiceDialog(getActivity(),
-                "Su unidad se encuentra en camino ¿Seguro de cancelar el servicio?", new AlertInterface() {
+        cancelButton.setOnClickListener(view12 -> Utils.showCancelServiceDialog(getActivity(), "Su unidad se encuentra en camino ¿Seguro de cancelar el servicio?", new AlertInterface() {
             @Override
             public void Accept() {
             }
@@ -296,7 +295,6 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
 
                     dataContainer.bringToFront();
                     isWaitingDriver = false;
-                    //Utils.notshowCancelServiceDialog(adC);
                 setupServiceDataUI();
                 }
             }
@@ -308,7 +306,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
     private void setupServiceDataUI() {
         try {
             Glide.with(Objects.requireNonNull(getActivity())).load(driverImageUrl + String.valueOf(serviceData.getInt("id_conductor")) + ".jpg").apply(RequestOptions.circleCropTransform()).into(driverImage);
-            driverRating.setText(String.valueOf(serviceData.getInt("calificacion")));
+            driverRating.setText(String.valueOf(serviceData.getDouble("calificacion")));
             driverNameText.setText(serviceData.getString("nombre"));
             carText.setText(serviceData.getString("marca") + " "  + serviceData.getString("modelo") + " " + serviceData.getString("color"));
             extracarText.setText(serviceData.getString("permiso")+ " "  + serviceData.getString("placas"));
@@ -455,9 +453,8 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
                             @Override
                             public void Cancel() {
                                 try {
-                                    waitTextView.setText("Cancelando, espere un momento");
+                                    waitTextView.setText("Cancelando, espere un momento.");
                                     paymentWebView.loadUrl(cancelUrl + String.valueOf(serviceData.getInt("id")));
-                                    isDialogShown=false;
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

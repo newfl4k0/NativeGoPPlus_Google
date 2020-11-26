@@ -203,9 +203,10 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
                     }
                 }
             }
-
+        }
             if (requestCode == LOCATIOM_REQUEST_CODE) {
-                if (resultCode == LOCATIOM_REQUEST_SUCESS) {
+                if (resultCode == com.pplus.go.app.gopplus.Location.SUCCESS) {
+
                     toLocationText.setText(data.getStringExtra("address"));
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(data.getDoubleExtra("latitude", 0), data.getDoubleExtra("longitude", 0)), zoom));
                 }
@@ -214,7 +215,7 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
             super.onActivityResult(requestCode, resultCode, data);
         }
 
-    }
+
         protected void onStart () {
             super.onStart();
 
