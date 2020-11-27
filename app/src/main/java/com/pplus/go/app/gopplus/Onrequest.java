@@ -2,6 +2,8 @@ package com.pplus.go.app.gopplus;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,8 +26,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.util.TypedValue;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,6 +43,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +58,15 @@ import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.PermissionUtils;
 import com.pplus.go.Data.Database;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
+
+import static com.pplus.go.Utils.Utils.getProgressDialog;
+import static com.pplus.go.app.gopplus.R.id.openDestination;
+import static com.pplus.go.app.gopplus.R.id.swipeContainer;
+import static com.pplus.go.app.gopplus.R.id.time;
+import static com.pplus.go.app.gopplus.R.id.vehiclesContainer;
+import static com.pplus.go.app.gopplus.R.mipmap.*;
+import static com.pplus.go.app.gopplus.R.mipmap.vehicle;
+import static com.pplus.go.app.gopplus.R.string.defaultProgress;
 
 public class Onrequest extends Fragment implements OnMapReadyCallback {
     private OnFragmentInteractionListener mListener;
@@ -86,11 +101,25 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
     private Handler vehiclesTimer;
     private Handler finishedServicesTimer;
 
+    private ProgressDialog dialog;
+
+    private RequestOptions ActiveOptions = new RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .placeholder(vehiclered)
+            .error(vehiclered);
+
+    private RequestOptions InactiveOptions = new RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .placeholder(vehicle)
+            .error(vehicle);
+
     private static final String LCAT = "ONREQUEST";
 
-    public Onrequest() {
-        // Required empty public constructor
-    }
+    private FusedLocationProviderClient mFusedLocationClient;
+
+    public Onrequest() { }
 
     public static Onrequest newInstance() {
         Onrequest fragment = new Onrequest();
@@ -99,16 +128,16 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
         return fragment;
     }
 
-
+    @SuppressLint("CheckResult")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) Objects.requireNonNull(getActivity()).getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
-        unselectedOption.placeholder(R.mipmap.vehicle);
-        unselectedOption.error(R.mipmap.vehicle);
+        unselectedOption.placeholder(vehicle);
+        unselectedOption.error(vehicle);
 
-        selectedOption.placeholder(R.mipmap.vehiclered);
-        selectedOption.error(R.mipmap.vehiclered);
+        selectedOption.placeholder(vehiclered);
+        selectedOption.error(vehiclered);
         super.onCreate(savedInstanceState);
     }
 
@@ -116,11 +145,12 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         LinearLayout swipeContainer = view.findViewById(R.id.swipeContainer);
 
-        scrollView = getView().findViewById(R.id.vehiclesContainer);
+        scrollView = Objects.requireNonNull(getView()).findViewById(vehiclesContainer);
         swipeArrow = getView().findViewById(R.id.swipeArrow);
-        openDestinationButton = getView().findViewById(R.id.openDestination);
+        openDestinationButton = getView().findViewById(openDestination);
         searchText = view.findViewById(R.id.searchText);
-        timeText = view.findViewById(R.id.time);
+        timeText = view.findViewById(time);
+        dialog = getProgressDialog(getActivity(), getResources().getString(defaultProgress));
 
         scrollView.bringToFront();
         addVehicles();
@@ -148,7 +178,7 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
             startActivityForResult(intent, CODE_LOCATION);
         });
 
-        (getView().findViewById(R.id.openDestination)).setOnClickListener(view12 -> {
+        (getView().findViewById(openDestination)).setOnClickListener(view12 -> {
             if (vehicleSelected != null && locationSelected != null && vehiclesHidden) {
                 Intent intent = new Intent(getActivity(), Destination.class);
                 intent.putExtra(Destination.DESTINATION_REQUEST_LOCATION, locationSelected.toString());
@@ -163,15 +193,15 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_onrequest, container, false);
-        mapView = (MapView) view.findViewById(R.id.map);
+        mapView = view.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
         return view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onAttach(@NotNull Context context) {
+        super.onAttach(Objects.requireNonNull(context));
 
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
@@ -197,7 +227,7 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
         finishedServicesTimer = new Handler();
 
         getNearestVehicles();
-        getUnratedServices();
+        getUnratedServicesWait();
     }
 
     @Override
@@ -205,9 +235,14 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
         Log.d(LCAT, "ON PAUSE");
         super.onPause();
         mapView.onPause();
+        dialog.hide();
 
         if (vehiclesTimer != null) {
             vehiclesTimer.removeCallbacksAndMessages(null);
+        }
+
+        if (finishedServicesTimer != null) {
+            finishedServicesTimer.removeCallbacksAndMessages(null);
         }
     }
 
@@ -216,12 +251,13 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
         super.onDestroy();
         mapView.onDestroy();
         finishedServicesTimer.removeCallbacksAndMessages(null);
+        vehiclesTimer.removeCallbacksAndMessages(null);
         locationManager.removeUpdates(locationListener);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        MapsInitializer.initialize(this.getActivity());
+        MapsInitializer.initialize(Objects.requireNonNull(this.getActivity()));
         gmap = googleMap;
         gmap.moveCamera(CameraUpdateFactory.newLatLngZoom( new LatLng(21.122039, -101.667102), zoom));
         startLocationManager();
@@ -282,13 +318,15 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
                 pauseMapListener = true;
                 searchText.setText(data.getStringExtra("address"));
                 gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(data.getDoubleExtra("latitude", 0), data.getDoubleExtra("longitude", 0)), zoom));
-                getNearestVehicles();
-                pauseMapListener = false;
+                getNearestVehicles();new android.os.Handler().postDelayed(
+                        () -> pauseMapListener = false,
+                        1000 * 2);
             }
         }
 
         if (requestCode == Destination.DESTINATION_REQUEST_CODE) {
             if (resultCode == Destination.DESTINATION_RESULT_SUCCESS) {
+                dialog.show();
                 Log.d("ONREQUEST", "service requested");
             }
         }
@@ -299,6 +337,34 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void showInactive(ImageView active, ImageView inactive) {
+        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
+
+        ViewGroup.LayoutParams inactiveParams = inactive.getLayoutParams();
+        inactiveParams.height = height;
+        inactive.setLayoutParams(inactiveParams);
+        inactive.setVisibility(View.VISIBLE);
+
+        ViewGroup.LayoutParams activeParams = active.getLayoutParams();
+        activeParams.height = 0;
+        active.setLayoutParams(activeParams);
+        active.setVisibility(View.INVISIBLE);
+    }
+
+    public void showActive(ImageView active, ImageView inactive) {
+        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
+
+        ViewGroup.LayoutParams activeParams = active.getLayoutParams();
+        activeParams.height = height;
+        active.setLayoutParams(activeParams);
+        active.setVisibility(View.VISIBLE);
+
+        ViewGroup.LayoutParams inactiveParams = inactive.getLayoutParams();
+        inactiveParams.height = 0;
+        inactive.setLayoutParams(inactiveParams);
+        inactive.setVisibility(View.INVISIBLE);
     }
 
     LocationListener locationListener = new LocationListener() {
@@ -328,11 +394,7 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
                 scrollView.removeAllViews();
 
                 new Handler().postDelayed(
-                        new Runnable() {
-                            public void run() {
-                                addVehicles();
-                            }
-                        },
+                        () -> addVehicles(),
                         1000 * 10);
             } else {
                 vehiclesByType = new JSONArray(vehiclesByTypeText);
@@ -351,55 +413,57 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
                         JSONObject vehicleType = vehiclesByType.getJSONObject(i);
                         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
                         LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.layout_vehicle, null);
-                        ImageView vehicleImage = (ImageView) linearLayout.findViewById(R.id.vehicleImage);
+                        ImageView vehicleImage = linearLayout.findViewById(R.id.vehicleImage);
+                        final ImageView inactiveVehicleImage = linearLayout.findViewById(R.id.inactiveVehicleImage);
+
 
                         ((TextView) linearLayout.findViewById(R.id.vehicleType)).setText(vehicleType.getString("nombre"));
                         ((TextView) linearLayout.findViewById(R.id.startPrice)).setText("Mínima $" + vehicleType.getString("precio_minimo"));
                         ((TextView) linearLayout.findViewById(R.id.timePrice)).setText("Minuto $" + vehicleType.getString("precio_min"));
                         ((TextView) linearLayout.findViewById(R.id.kmPrice)).setText("Km $" + vehicleType.getString("precio_km"));
 
-                        Glide.with(getActivity()).setDefaultRequestOptions(unselectedOption).load(getResources().getString(R.string.apiAdmin) + "images/Uploads/" + vehicleType.getString("unselected")).into(vehicleImage);
+                        //Glide.with(getActivity()).setDefaultRequestOptions(unselectedOption).load(getResources().getString(R.string.apiAdmin) + "images/Uploads/" + vehicleType.getString("unselected")).into(vehicleImage);
+                        Glide.with(getActivity()).load(getResources().getString(R.string.apiAdmin) + "images/Uploads/" + vehicleType.getString("unselected")).apply(InactiveOptions).into(inactiveVehicleImage);
+                        Glide.with(getActivity()).load(getResources().getString(R.string.apiAdmin) + "images/Uploads/" + vehicleType.getString("selected")).apply(ActiveOptions).into(vehicleImage);
 
-                        if (vehicleType.getInt("id") == vehicleSelected.getInt("id")) {
-                          Glide.with(getActivity()).setDefaultRequestOptions(selectedOption).load(getResources().getString(R.string.apiAdmin) + "images/Uploads/" + vehicleSelected.getString("selected")).into(vehicleImage);
+                        if (vehicleType.getInt("id") != vehicleSelected.getInt("id")) {
+                          //Glide.with(getActivity()).setDefaultRequestOptions(selectedOption).load(getResources().getString(R.string.apiAdmin) + "images/Uploads/" + vehicleSelected.getString("selected")).into(vehicleImage);
+                            showInactive(vehicleImage, inactiveVehicleImage);
+
                         }
 
 
-                        linearLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                try {
-                                    int index = ((LinearLayout) view.getParent()).indexOfChild(view);
-                                    int viewsCount = scrollView.getChildCount();
+                        linearLayout.setOnClickListener(view -> {
+                            try {
+                                int index = ((LinearLayout) view.getParent()).indexOfChild(view);
+                                int viewsCount = scrollView.getChildCount();
 
-                                    for (int i = 0; i < viewsCount; i++) {
-                                        LinearLayout c = (LinearLayout) scrollView.getChildAt(i);
-                                        ImageView vehicleImage = c.findViewById(R.id.vehicleImage);
+                                for (int i1 = 0; i1 < viewsCount; i1++) {
+                                    LinearLayout c = (LinearLayout) scrollView.getChildAt(i1);
+                                    ImageView vehicleimage = c.findViewById(R.id.vehicleImage);
+                                    ImageView inactivevehicleImage = c.findViewById(R.id.inactiveVehicleImage);
 
-                                        if (i == index) {
-                                            vehicleSelected = vehiclesByType.getJSONObject(i);
-                                            Glide.with(getActivity()).setDefaultRequestOptions(selectedOption).load(getResources().getString(R.string.apiAdmin) + "images/Uploads/" + vehicleSelected.getString("selected")).into(vehicleImage);
-                                        } else {
-                                            Glide.with(getActivity()).setDefaultRequestOptions(unselectedOption).load(getResources().getString(R.string.apiAdmin) + "images/Uploads/" + vehicleSelected.getString("unselected")).into(vehicleImage);
-                                        }
+
+                                    if (i1 == index) {
+                                        vehicleSelected = vehiclesByType.getJSONObject(i1);
+                                        showActive(vehicleImage, inactiveVehicleImage);
+                                    } else {
+                                        showInactive(vehicleimage, inactivevehicleImage);
                                     }
-
-                                    getNearestVehicles();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
+
+                                getNearestVehicles();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         });
 
                         scrollView.addView(linearLayout);
                     }
 
-                    scrollView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            swipeContainerY = getView().findViewById(R.id.swipeContainer).getY();
-                            hideSwipeContainer();
-                        }
+                    scrollView.post(() -> {
+                        swipeContainerY = Objects.requireNonNull(getView()).findViewById(swipeContainer).getY();
+                        hideSwipeContainer();
                     });
 
                 }
@@ -412,72 +476,85 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
     public void showSwipeContainer() {
         vehiclesHidden = false;
 
-        float moveY = Utils.convertDpToPixel(0, getContext());
+        float moveY = Utils.convertDpToPixel(0, Objects.requireNonNull(getContext()));
         swipeArrow.setImageResource(R.drawable.ic_arrow_down);
         runSwipeContainer(moveY);
     }
 
     public void hideSwipeContainer() {
         vehiclesHidden = true;
-        float moveY = Utils.convertDpToPixel(58, getContext());
+        float moveY = Utils.convertDpToPixel(58, Objects.requireNonNull(getContext()));
         swipeArrow.setImageResource(R.drawable.ic_arrow_up);
         runSwipeContainer(moveY);
     }
 
     public void runSwipeContainer(float moveY){
         openDestinationButton.setEnabled(false);
-        Objects.requireNonNull(getView()).findViewById(R.id.swipeContainer).animate().translationY(moveY).withEndAction(() -> {
+        Objects.requireNonNull(getView()).findViewById(swipeContainer).animate().translationY(moveY).withEndAction(() -> {
 
             final Handler enableHandler = new Handler();
 
             enableHandler.postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            openDestinationButton.setEnabled(true);
-                            enableHandler.removeCallbacksAndMessages(null);
-                        }
+                    () -> {
+                        openDestinationButton.setEnabled(true);
+                        enableHandler.removeCallbacksAndMessages(null);
                     }, 3000);
 
         });
     }
 
     public void searchByLocation(Location location) {
-        Geocoder geocoder = new Geocoder(getActivity().getApplicationContext(), Locale.getDefault());
-        List<Address> addresses = null;
-
-        locationSelected = null;
-
-        try {
-            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (location == null) {
+            Utils.showAlert(getActivity(), "Verifica los permisos de GPS");
+            return;
         }
 
-        if (addresses == null || addresses.size()  == 0) {
-            Utils.showAlert(getActivity(), "No se encontraron resultados");
-        } else {
-            Log.d("addresses", addresses.toString());
+        if (!APIRequest.getInternetConnection()){
+            Utils.showAlert(getActivity(), "Verifica tu conexión a internet");
+            return;
+        }
 
-            String[] addressLine = addresses.get(0).getAddressLine(0).split(",");
-            searchText.setText( addressLine[0] + ", " + addressLine[1] );
-            boolean hasCityGeocode = true;//addresses.get(0).getAddressLine(0).toLowerCase().contains(getResources().getString(R.string.ciudad_geocode).toLowerCase());
+        if (getActivity() != null) {
 
-            if (!hasCityGeocode) {
-                timeText.setText("No tenemos cobertura en esta zona");
-            } else {
-                try {
-                    locationSelected = new JSONObject();
-                    locationSelected.put("address", searchText.getText().toString());
-                    locationSelected.put("latitude", location.getLatitude());
-                    locationSelected.put("longitude", location.getLongitude());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            Geocoder geocoder = new Geocoder(getActivity().getApplicationContext(), Locale.getDefault());
+            List<Address> addresses = null;
 
-                timeText.setText("Calculando tiempo de espera");
-                getNearestVehicles();
+            locationSelected = null;
+
+            try {
+                addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+            if (addresses == null || addresses.size()  == 0) {
+                Utils.showAlert(getActivity(), "No se encontraron resultados");
+            } else {
+                Log.d("addresses", addresses.toString());
+
+                String[] addressLine = addresses.get(0).getAddressLine(0).split(",");
+                searchText.setText( addressLine[0] + ", " + addressLine[1] );
+                boolean hasCityGeocode = true;//addresses.get(0).getAddressLine(0).toLowerCase().contains(getResources().getString(R.string.ciudad_geocode).toLowerCase());
+
+                if (!hasCityGeocode) {
+                    timeText.setText("No tenemos cobertura en esta zona");
+                } else {
+                    try {
+                        locationSelected = new JSONObject();
+                        locationSelected.put("address", searchText.getText().toString());
+                        locationSelected.put("latitude", location.getLatitude());
+                        locationSelected.put("longitude", location.getLongitude());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    timeText.setText("Calculando tiempo de espera");
+                    getNearestVehicles();
+                }
+            }
+
         }
+
     }
 
     private void getNearestVehiclesWait() {
@@ -502,7 +579,7 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void Success(JSONObject response) {
                         try {
-                            if (response.getBoolean("status") == true && response.has("data")) {
+                            if (response.getBoolean("status") && response.has("data")) {
                                 JSONArray connectedVehicles = response.getJSONArray("data");
 
                                 if (connectedVehicles.length() > 0) {
@@ -540,7 +617,7 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
                                     for (int i = 0; i < connectedVehicles.length(); i++) {
                                         try {
                                             JSONObject connectedVehicle = connectedVehicles.getJSONObject(i);
-                                            BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.mipmap.car);
+                                            BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(car);
                                             gmap.addMarker(new MarkerOptions().position(new LatLng(connectedVehicle.getDouble("latitude"), connectedVehicle.getDouble("longitude"))).icon(icon));
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -589,11 +666,19 @@ public class Onrequest extends Fragment implements OnMapReadyCallback {
                 @Override
                 public void Success(JSONObject response) {
                     try {
-                        if (response.getBoolean("status") == true) {
-                            Intent intent = new Intent(getActivity(), Rate.class);
-                            intent.putExtra(Rate.REQUEST_RATE, response.getJSONObject("data").toString());
-                            startActivityForResult(intent, Rate.REQUEST_CODE);
-                            rateViewOpen = true;
+                        if (response.getBoolean("status")) {
+
+                            Activity act = getActivity();
+
+                            if (act != null) {
+                                Intent intent = new Intent(act, Rate.class);
+                                intent.putExtra(Rate.REQUEST_RATE, response.getJSONObject("data").toString());
+                                startActivityForResult(intent, Rate.REQUEST_CODE);
+                                rateViewOpen = true;
+                            } else {
+                                Log.d(LCAT, "Is null");
+                                getUnratedServicesWait();
+                            }
                         } else {
                             getUnratedServicesWait();
                         }

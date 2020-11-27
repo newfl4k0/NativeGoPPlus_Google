@@ -2,12 +2,14 @@ package com.pplus.go.app.gopplus;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -75,6 +78,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
     private TextView driverNameText;
     private TextView carText;
     private TextView extracarText;
+    private TextView permText;
     private TextView kmText;
     private TextView serviceStatusText;
     private String lastStartPoint = "";
@@ -88,12 +92,47 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
     private Polyline routeLine;
     private float zoom = 16.0f;
     private boolean notificateArrival;
-
+    private AlertDialog cancelAlertDialog;
+    private boolean isCancelProcessWorking = false;
 
     private Intent chatIntent;
+    private RequestOptions imageOptions = new RequestOptions()
+            .circleCrop()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true);
 
     public Onboard() {
     }
+
+    private AlertDialog setCancelAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+        builder.setMessage("No se encontraron unidades cercanas. ¿Desea seguir esperando?");
+        builder.setCancelable(false);
+
+        builder.setPositiveButton(
+                "Seguir Esperando",
+                (dialog, id) -> {
+                    dialog.cancel();
+                    isDialogShown = false;
+                });
+
+        builder.setNegativeButton("Cancelar Servicio", (dialog, i) -> {
+            dialog.cancel();
+
+            try {
+                isCancelProcessWorking = true;
+                waitContainer.bringToFront();
+                paymentWebView.loadUrl(cancelUrl + String.valueOf(serviceData.getInt("id")));
+                paymentWebView.setVisibility(View.VISIBLE);
+                paymentWebView.bringToFront();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+
+        return builder.create();
+    }
+
 
     public static Onboard newInstance() {
         Onboard fragment = new Onboard();
@@ -109,6 +148,7 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
         if (mapView != null) {
             mapView.onCreate(savedInstanceState);
         }
+        this.cancelAlertDialog = setCancelAlertDialog();
 
         super.onCreate(savedInstanceState);
     }
@@ -154,19 +194,19 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
         toMarker = null;
         carMarker = null;
 
-        dataContainer     = (ConstraintLayout) view.findViewById(R.id.dataContainer);
-        waitContainer     = (ConstraintLayout) view.findViewById(R.id.waitContainer);
-        waitTextView      = (TextView) view.findViewById(R.id.waitTextView);
-        paymentWebView    = (WebView) view.findViewById(R.id.webView);
-        driverImage       = (ImageView) view.findViewById(R.id.driverImage);
-        driverRating      = (TextView) view.findViewById(R.id.driverRating);
-        driverNameText    = (TextView) view.findViewById(R.id.driverNameText);
-        carText           = (TextView) view.findViewById(R.id.carText);
-        extracarText      = (TextView) view.findViewById(R.id.extracarText);
-        kmText            = (TextView) view.findViewById(R.id.kmText);
-        serviceStatusText = (TextView) view.findViewById(R.id.serviceStatusText);
-        cancelButton      = (Button) view.findViewById(R.id.cancelServiceButton);
-        chatButton        = (Button) view.findViewById(R.id.chatButton);
+        dataContainer     = view.findViewById(R.id.dataContainer);
+        waitContainer     = view.findViewById(R.id.waitContainer);
+        waitTextView      = view.findViewById(R.id.waitTextView);
+        paymentWebView    = view.findViewById(R.id.webView);
+        driverImage       = view.findViewById(R.id.driverImage);
+        driverRating      = view.findViewById(R.id.driverRating);
+        driverNameText    = view.findViewById(R.id.driverNameText);
+        carText           = view.findViewById(R.id.carText);
+        extracarText      = view.findViewById(R.id.extracarText);
+        kmText            = view.findViewById(R.id.kmText);
+        serviceStatusText = view.findViewById(R.id.serviceStatusText);
+        cancelButton      = view.findViewById(R.id.cancelServiceButton);
+        chatButton        = view.findViewById(R.id.chatButton);
 
 
         webViewClient = new WebViewClient() {
@@ -174,10 +214,14 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.contains("postauth-service-end")) {
                     waitTextView.setText("Espere un momento");
-                    cancelProgressDialog.hide();
+                    isCancelProcessWorking = false;
+                    cancelProgressDialog.show();
                 } else if (url.contains("postauth-service-error")) {
                     try {
+                        isCancelProcessWorking = false;
                         cancelProgressDialog.hide();
+                        paymentWebView.setVisibility(View.INVISIBLE);
+                        dataContainer.bringToFront();
                         Utils.showAlert(getActivity(), URLDecoder.decode(url.split("\\?e=")[1], "UTF-8"));
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
@@ -207,8 +251,11 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
             @Override
             public void Cancel() {
                 try {
-                    cancelProgressDialog.show();
+                    isCancelProcessWorking = true;
+                    waitContainer.bringToFront();
                     paymentWebView.loadUrl(cancelUrl + String.valueOf(serviceData.getInt("id")));
+                    paymentWebView.setVisibility(View.VISIBLE);
+                    paymentWebView.bringToFront();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -259,6 +306,9 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onDetach() {
+        cancelProgressDialog.hide();
+        paymentWebView.setVisibility(View.INVISIBLE);
+        dataContainer.bringToFront();
         super.onDetach();
     }
 
@@ -273,32 +323,38 @@ public class Onboard extends Fragment implements OnMapReadyCallback {
         Log.d(LCAT, "serviceData");
 
         try {
-            serviceData = service;
-            //AlertDialog adC = null;
+            if (!isCancelProcessWorking) {
+                serviceData = service;
 
-            if (service != null) {
-                int driverId = service.getInt("id_conductor");
-                int estatusId = service.getInt("estatus_reserva");
+                if (service != null) {
+                    int driverId = service.getInt("id_conductor");
+                    int estatusId = service.getInt("estatus_reserva");
 
-                if (driverId == 0 ) {
-                    waitTextView.setText("Buscando la unidad más cercana");
-                    waitContainer.bringToFront();
-                    isWaitingDriver = true;
-                    runCancelDialog();
-                } else if (map == null || (estatusId != 4 && estatusId != 5)) {
-                    waitTextView.setText(getActivity().getResources().getString(R.string.defaultProgress));
-                    waitContainer.bringToFront();
-                } else {
-                    if (((AppCompatActivity) getActivity()).getSupportActionBar().isShowing() == false) {
-                        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+                    if (driverId == 0) {
+                        waitTextView.setText("Buscando la unidad más cercana");
+                        waitContainer.bringToFront();
+                        isWaitingDriver = true;
+                        runCancelDialog();
+                    } else if (map == null || (estatusId != 4 && estatusId != 5)) {
+                        waitTextView.setText(getActivity().getResources().getString(R.string.defaultProgress));
+                        waitContainer.bringToFront();
+                    } else {
+                        if (((AppCompatActivity) getActivity()).getSupportActionBar().isShowing() == false) {
+                            ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+                        }
+
+                        dataContainer.bringToFront();
+                        isWaitingDriver = false;
+                        setupServiceDataUI();
+
+                        if (isDialogShown) {
+                            cancelAlertDialog.dismiss();
+                        }
+
                     }
-
-                    dataContainer.bringToFront();
-                    isWaitingDriver = false;
-                setupServiceDataUI();
                 }
             }
-        } catch (JSONException e) {
+        }catch (JSONException e) {
             e.printStackTrace();
         }
     }

@@ -13,12 +13,14 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.pplus.go.API.APIRequest;
+import com.pplus.go.Data.Database;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
@@ -30,16 +32,21 @@ public class Rate extends AppCompatActivity {
     private JSONObject service;
     private EditText commentText;
 
+    private RequestOptions imageOptions = new RequestOptions()
+            .circleCrop()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rate);
-
-        commentText = ((EditText) findViewById(R.id.commentsText));
+        final Activity activity = this;
+        commentText = ( findViewById(R.id.commentsText));
 
         String extras = getIntent().getStringExtra(REQUEST_RATE);
 
-        if (extras.isEmpty() == false) {
+        if (!extras.isEmpty()) {
             try {
                 service = new JSONObject(extras);
 

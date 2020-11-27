@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.Normalizer;
+import java.util.HashMap;
 import java.util.Objects;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -92,14 +94,13 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
 
     private static final String LCAT = "DESTINATION";
 
-    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Utils.showAlert(destinationActivity, intent.getStringExtra("message"));
         }
     };
 
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,12 +108,22 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
 
         destinationActivity = this;
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Log.d(LCAT, Objects.requireNonNull(getIntent().getStringExtra(DESTINATION_REQUEST_LOCATION)));
         Log.d(LCAT, Objects.requireNonNull(getIntent().getStringExtra(DESTINATION_REQUEST_TYPE)));
 
         SupportMapFragment mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
-        webView = (WebView) findViewById(R.id.webView);
-        containerData = (ConstraintLayout) findViewById(R.id.containerData);
+        webView = findViewById(R.id.webView);
+        containerData = findViewById(R.id.containerData);
+
+        final HashMap<String, String> extraHeaders = new HashMap<String, String>();
+        extraHeaders.put("appid", Database.getAppId(destinationActivity));
+        extraHeaders.put("userid", Database.getEncryptedUserId(destinationActivity));
+
 
         webViewClient = new WebViewClient() {
 
@@ -134,7 +145,7 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
                     }
                 }
 
-                view.loadUrl(url);
+                view.loadUrl(url, extraHeaders);
                 return true;
             }
         };
@@ -205,7 +216,7 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
             }
         }
             if (requestCode == LOCATIOM_REQUEST_CODE) {
-                if (resultCode == com.pplus.go.app.gopplus.Location.SUCCESS) {
+                if (resultCode == LOCATIOM_REQUEST_SUCESS) {
 
                     toLocationText.setText(data.getStringExtra("address"));
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(data.getDoubleExtra("latitude", 0), data.getDoubleExtra("longitude", 0)), zoom));
@@ -494,7 +505,10 @@ public class Destination extends AppCompatActivity implements OnMapReadyCallback
                 if (!efectivo) {
                     webView.setVisibility(View.VISIBLE);
                 }
-                webView.loadUrl(paymenturl);
+                final HashMap<String, String> extraHeaders = new HashMap<String, String>();
+                extraHeaders.put("appid", Database.getAppId(destinationActivity));
+                extraHeaders.put("userid", Database.getEncryptedUserId(destinationActivity));
+                webView.loadUrl(paymenturl, extraHeaders);
             } else {
                 Utils.showAlert(destinationActivity, error);
             }

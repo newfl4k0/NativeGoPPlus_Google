@@ -82,6 +82,20 @@ public class Profile extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                maxImageSize / realImage.getWidth(),
+                maxImageSize / realImage.getHeight());
+        int width = Math.round(ratio * realImage.getWidth());
+        int height = Math.round(ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+
+        return newBitmap;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -89,6 +103,8 @@ public class Profile extends AppCompatActivity {
             final ProgressDialog dialog = Utils.getProgressDialog(profileActivity, getResources().getString(R.string.defaultProgress));
             Bundle extras = data.getExtras();
             imageBitmap = (Bitmap) extras.get("data");
+            imageBitmap = scaleDown(imageBitmap, 150, true);
+
 
             String imageBase64 = Utils.BitMapToString(imageBitmap);
             dialog.show();
@@ -140,7 +156,7 @@ public class Profile extends AppCompatActivity {
 
 
         if (!RegexValidator.validateRequired(birthDay)) {
-            catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_required, "Cumpleaños");
+            catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_required, "Fecha de nacimiento");
         }
 
         if (!RegexValidator.validateRequired(name)) {
@@ -254,7 +270,7 @@ public class Profile extends AppCompatActivity {
                 Glide.with(profileActivity).load(getResources().getString(R.string.apiEndpoint) + "profile-image?id=" + String.valueOf(id)).apply(RequestOptions.circleCropTransform()).into(imageProfile);
             }
         } else {
-            Glide.with(this).load("http://graph.facebook.com/" + fbid + "/picture?type=normal&height=100&width=100").apply(RequestOptions.circleCropTransform()).into(imageProfile);
+            Glide.with(this).load("https://graph.facebook.com/" + fbid + "/picture?type=normal&height=100&width=100").apply(RequestOptions.circleCropTransform()).into(imageProfile);
             ((TextView) findViewById(R.id.updateImageText)).setText("");
             canReplaceImage = false;
         }

@@ -27,6 +27,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import com.pplus.go.API.APIRequest;
 import com.pplus.go.Data.Database;
@@ -38,7 +39,7 @@ import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
 
 public class CreditCards extends AppCompatActivity {
 
-    private final CardAdapter cardAdapter = new CardAdapter();
+    private CardAdapter cardAdapter = new CardAdapter();
     private JSONArray cards = new JSONArray();
     private ListView list;
 
@@ -64,6 +65,9 @@ public class CreditCards extends AppCompatActivity {
         setContentView(R.layout.activity_creditcards);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         creditCardActivity = this;
 
         list = findViewById(R.id.list);
@@ -81,17 +85,25 @@ public class CreditCards extends AppCompatActivity {
         Log.d(LCAT, "prevCreditCardId : " + String.valueOf(prevCreditCardId));
         Log.d(LCAT, "prevCreditCardDeleted : " + String.valueOf(prevCreditCardDeleted));
 
+        final HashMap<String, String> extraHeaders = new HashMap<String, String>();
+        extraHeaders.put("appid", Database.getAppId(creditCardActivity));
+        extraHeaders.put("userid", Database.getEncryptedUserId(creditCardActivity));
+
         webViewClient = new WebViewClient() {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.contains("card-service-end")) {
                     setWebviewVisible(false);
-                    loadCards();
                     number.setText("");
                     month.setText("");
                     year.setText("");
                     security.setText("");
+                    dialog.show();
+
+                    new android.os.Handler().postDelayed(
+                            () -> loadCards(),
+                            1000 * 5);
                 } else if (url.contains("card-service-error")) {
                     setWebviewVisible(false);
 
@@ -102,7 +114,7 @@ public class CreditCards extends AppCompatActivity {
                     }
                 }
 
-                view.loadUrl(url);
+                view.loadUrl(url, extraHeaders);
                 return true;
             }
         };
@@ -216,9 +228,12 @@ public class CreditCards extends AppCompatActivity {
                 String id   = Database.encrypt64(String.valueOf(Database.getUserClientId(this)), getResources().getString(R.string.secret));
                 String url  = getResources().getString(R.string.apiPayment) + "card-service-start?y=" + id + "&i=" + card + "&f=" + exp + "&a=" + cvv;
 
+                final HashMap<String, String> extraHeaders = new HashMap<String, String>();
+                extraHeaders.put("appid", Database.getAppId(creditCardActivity));
+                extraHeaders.put("userid", Database.getEncryptedUserId(creditCardActivity));
 
                 setWebviewVisible(true);
-                webView.loadUrl(url);
+                webView.loadUrl(url, extraHeaders);
             } else {
                 Utils.showAlert(this, error);
             }

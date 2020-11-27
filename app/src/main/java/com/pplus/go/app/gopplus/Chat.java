@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONArray;
@@ -33,10 +34,15 @@ public class Chat extends AppCompatActivity {
 
     private Activity chatActivity;
     private Handler chatTimer;
-    private final ChatAdapter chatAdapter = new ChatAdapter();
+    private ChatAdapter chatAdapter = new ChatAdapter();
     private ListView list;
     private JSONArray messages;
     private EditText messageText;
+
+    private RequestOptions imageOptions = new RequestOptions()
+            .circleCrop()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +171,6 @@ public class Chat extends AppCompatActivity {
             return i;
         }
 
-        @SuppressLint("InflateParams")
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             try {
@@ -179,7 +184,7 @@ public class Chat extends AppCompatActivity {
 
                 ((TextView) view.findViewById(R.id.messageText)).setText(message.getString("mensaje"));
                 ((TextView) view.findViewById(R.id.dateText)).setText(message.getString("fecha"));
-                Glide.with(chatActivity).load(message.getString("img")).apply(RequestOptions.circleCropTransform()).into(((ImageView) view.findViewById(R.id.chatImage)));
+                Glide.with(chatActivity).load(message.getString("img")).apply(imageOptions).into(((ImageView) view.findViewById(R.id.chatImage)));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

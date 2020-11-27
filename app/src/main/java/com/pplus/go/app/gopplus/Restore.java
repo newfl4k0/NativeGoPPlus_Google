@@ -17,6 +17,8 @@ import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
 
+import java.util.Objects;
+
 
 public class Restore extends AppCompatActivity {
 
@@ -32,10 +34,10 @@ public class Restore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        /*setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         restoreActivity = this;
         email = getIntent().getStringExtra("email");
     }

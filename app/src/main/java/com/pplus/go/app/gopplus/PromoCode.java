@@ -6,6 +6,8 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+
+import android.text.InputFilter;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +20,8 @@ import com.pplus.go.Data.Database;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
+
+import java.util.Objects;
 
 
 public class PromoCode extends AppCompatActivity {
@@ -32,11 +36,16 @@ public class PromoCode extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promocode);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         codeText = (EditText) findViewById(R.id.codeText);
         promoCodeActivity = this;
         codeObject = new JSONObject();
+
+        codeText.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
 
         try {
             if (getIntent().hasExtra("codeObject")) {

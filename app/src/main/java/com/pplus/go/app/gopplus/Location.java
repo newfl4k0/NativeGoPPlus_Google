@@ -1,6 +1,7 @@
 package com.pplus.go.app.gopplus;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Address;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,8 +28,14 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.pplus.go.API.APIRequest;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.Utils.Utils;
+import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Location extends AppCompatActivity {
     static final int SUCCESS = 1;
@@ -36,11 +44,15 @@ public class Location extends AppCompatActivity {
     EditText searchEditText;
     List<String> foundAddress = new ArrayList<String>();
     ArrayAdapter<String> adapter;
-    private List<Address> addresses = null;
-    private LocationRequest mLocationRequest;
-    private android.location.Location mLastLocation;
-    private FusedLocationProviderClient mFusedLocationClient;
-    private String city = "";
+     List<Address> addresses = null;
+     private LocationRequest mLocationRequest;
+     private android.location.Location mLastLocation;
+     private FusedLocationProviderClient mFusedLocationClient;
+     private String city = "";
+    JSONArray predictions = new JSONArray();
+    ProgressDialog dialog;
+    Activity locationActivity = this;
+
 
 
     @SuppressLint("MissingPermission")
@@ -54,20 +66,52 @@ public class Location extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        dialog = Utils.getProgressDialog(this, getResources().getString(R.string.defaultProgress));
         list = findViewById(R.id.list);
         searchEditText = findViewById(R.id.searchText);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, foundAddress);
 
         list.setOnItemClickListener((adapterView, view, i, l) -> {
-            String[] addressText = addresses.get(i).getAddressLine(0).split(",");
-            Intent intent = new Intent();
+            try {
+                dialog.show();
+                String placeId = predictions.getJSONObject(i).getString("place_id");
 
-            intent.putExtra("address", addressText[0] + " " + addressText[1]);
-            intent.putExtra("latitude", addresses.get(i).getLatitude());
-            intent.putExtra("longitude", addresses.get(i).getLongitude());
-            setResult(SUCCESS, intent);
-            finish();
+                APIRequest.PlaceAPI(placeId, new RequestInterface() {
+                    @Override
+                    public void Success(JSONObject response) {
+                        dialog.hide();
+
+                        try {
+                            JSONObject location = response.getJSONObject("result").getJSONObject("geometry").getJSONObject("location");
+                            Intent intent = new Intent();
+
+                            intent.putExtra("address", response.getJSONObject("result").getString("name"));
+                            intent.putExtra("latitude", location.getDouble("lat"));
+                            intent.putExtra("longitude", location.getDouble("lng"));
+
+                            setResult(SUCCESS, intent);
+                            finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void Error(JSONObject error) {
+                        Log.e("PLACE", error.toString());
+                        dialog.hide();
+                        Utils.showAlert(locationActivity,  "Algo ha pasado, intenta nuevamente.");
+                    }
+                });
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Utils.showAlert(locationActivity,  "Algo ha pasado, intenta nuevamente.");
+                dialog.hide();
+            }
         });
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(this, l -> {
             if (l != null) {
@@ -83,7 +127,6 @@ public class Location extends AppCompatActivity {
 
             }
         });
-
         list.setAdapter(adapter);
         Utils.hideKeyboard(this);
     }

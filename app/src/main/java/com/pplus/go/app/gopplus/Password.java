@@ -17,6 +17,8 @@ import com.pplus.go.Utils.Utils;
 import com.pplus.go.Utils.RegexValidator;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
 
+import java.util.Objects;
+
 
 public class Password extends AppCompatActivity {
 
@@ -26,9 +28,9 @@ public class Password extends AppCompatActivity {
         setContentView(R.layout.activity_password);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        /*setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -74,6 +76,10 @@ public class Password extends AppCompatActivity {
 
         if (!newPassword.equals(confirmPassword)) {
             catchError += "\nNueva contraseña y confirmación no coinciden";
+        }
+
+        if (currentPassword.equals(newPassword)) {
+            catchError += "\nNueva contraseña y contraseña actual son iguales";
         }
 
         if (catchError.isEmpty()) {

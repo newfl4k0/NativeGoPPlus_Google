@@ -40,6 +40,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     @Override
+    public void onNewToken(String s) {
+        super.onNewToken(s);
+        Log.d("FCM", s);
+    }
+
+    @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d("onMessageReceived", "onMessageReceived");
         super.onMessageReceived(remoteMessage);
@@ -110,6 +116,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     public void onNewToken() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        //Log.d(TAG, "token: " + refreshedToken);
     }
 }

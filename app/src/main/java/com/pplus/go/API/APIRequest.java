@@ -2,6 +2,9 @@ package com.pplus.go.API;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -26,8 +29,7 @@ import com.pplus.go.app.gopplus.R;
 
 public class APIRequest {
     private static RequestQueue queue;
-    private static HashMap<String, String> headers = new HashMap<>();
-    @SuppressLint("StaticFieldLeak")
+    private static HashMap<String, String> headers = new HashMap<String, String>();
     private static Activity currentActivity;
 
     public static void setQueue(Activity activity){
@@ -37,38 +39,43 @@ public class APIRequest {
         headers.put("userid", Database.getEncryptedUserId(currentActivity));
     }
 
+    public static boolean getInternetConnection() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) currentActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
     public static void cancelQueue(){
         queue.cancelAll(R.string.app_name);
     }
 
-    private static void getRequest(String url, final ResponseInterface listener) {
+    public static void getRequest(String url, final ResponseInterface listener) {
         try {
-            headers.put("appid", Database.getAppId(currentActivity));
-            headers.put("userid", Database.getEncryptedUserId(currentActivity));
-            Log.d("[GET]", url);
-            Log.d("HEADERS", headers.toString());
+            if (!getInternetConnection()) {
+                listener.Catch("Verifica tu conexión a internet");
+            } else {
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.d("RESPONSE", response.toString());
-                    listener.Success(response);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("ERROR", error.toString());
-                    listener.Error(error);
-                }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    return headers;
-                }
-            };
+                if (currentActivity == null) {
+                    listener.Catch("Intenta nuevamente");
+                } else {
+                    headers.put("appid", Database.getAppId(currentActivity));
+                    headers.put("userid", Database.getEncryptedUserId(currentActivity));
 
-            jsonObjectRequest.setTag(R.string.app_name);
-            queue.add(jsonObjectRequest);
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, response -> listener.Success(response), listener::Error) {
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            return headers;
+                        }
+                    };
+
+                    jsonObjectRequest.setTag(R.string.app_name);
+                    queue.add(jsonObjectRequest);
+                }
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
             listener.Catch(e.getMessage());
@@ -77,30 +84,26 @@ public class APIRequest {
 
     public static void postRequest(String url, JSONObject objectToSend, final ResponseInterface listener) {
         try {
-            headers.put("appid", Database.getAppId(currentActivity));
-            headers.put("userid", Database.getEncryptedUserId(currentActivity));
-            Log.d("[POST]", url);
-            Log.d("DATA", objectToSend.toString());
-            Log.d("HEADERS", headers.toString());
+            if (!getInternetConnection()) {
+                listener.Catch("Verifica tu conexión a internet");
+            } else {
+                if (currentActivity == null) {
+                    listener.Catch("Intenta nuevamente");
+                } else {
+                    headers.put("appid", Database.getAppId(currentActivity));
+                    headers.put("userid", Database.getEncryptedUserId(currentActivity));
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, objectToSend, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.d("RESPONSE", response.toString());
-                    listener.Success(response);
-                }
-            }, error -> {
-                Log.d("ERROR", error.toString());
-                listener.Error(error);
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    return headers;
-                }
-            };
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, objectToSend, listener::Success, listener::Error) {
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            return headers;
+                        }
+                    };
 
-            jsonObjectRequest.setTag(R.string.app_name);
-            queue.add(jsonObjectRequest);
+                    jsonObjectRequest.setTag(R.string.app_name);
+                    queue.add(jsonObjectRequest);
+                }
+            }
         } catch (Exception e) {
             listener.Catch(e.getMessage());
         }
@@ -109,6 +112,48 @@ public class APIRequest {
     /**
      * API Endpoints
      */
+
+    public static void PublicSettings(final RequestInterface listener) {
+        final JSONObject errorResponse = new JSONObject();
+
+        try {
+            errorResponse.put("status", false);
+            errorResponse.put("message", R.string.default_error);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        getRequest(Utils.getString(currentActivity, R.string.apiEndpoint) + "initsettings", new ResponseInterface() {
+            @Override
+            public void Success(JSONObject response) {
+                listener.Success(response);
+            }
+
+            @Override
+            public void Error(VolleyError error) {
+                try {
+                    errorResponse.put("code", error.networkResponse.statusCode);
+                    errorResponse.put("message", error.getMessage());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                listener.Error(errorResponse);
+            }
+
+            @Override
+            public void Catch(String error) {
+                try {
+                    errorResponse.put("message", error);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                listener.Error(errorResponse);
+            }
+        });
+    }
+
     public static void Sync( final RequestInterface listener ) {
         final JSONObject errorResponse = new JSONObject();
 
@@ -732,6 +777,7 @@ public class APIRequest {
         final JSONObject errorResponse = new JSONObject();
 
         try {
+
             errorResponse.put("status", false);
             errorResponse.put("message", Utils.getString(currentActivity, R.string.default_error));
 
@@ -759,8 +805,10 @@ public class APIRequest {
                 @Override
                 public void Error(VolleyError error) {
                     try {
-                        errorResponse.put("code", error.networkResponse.statusCode);
-                        errorResponse.put("message", error.getMessage());
+                        if (error!=null) {
+                            errorResponse.put("code", error.networkResponse.statusCode);
+                            errorResponse.put("message", error.getMessage());
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -1291,6 +1339,11 @@ public class APIRequest {
 
             @Override
             public void Catch(String error) {
+                try {
+                    errorResponse.put("message", error);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 listener.Error(errorResponse);
             }
         });
@@ -1320,6 +1373,84 @@ public class APIRequest {
 
             @Override
             public void Catch(String error) {
+                try {
+                    errorResponse.put("message", error);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                listener.Error(errorResponse);
+            }
+        });
+    }
+
+    public static void AutocompleteAPI(String query, final RequestInterface listener) {
+        final JSONObject errorResponse = new JSONObject();
+
+        try {
+            errorResponse.put("status", false);
+            errorResponse.put("message", Utils.getString(currentActivity, R.string.default_error));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String apirequest = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + query + "&key=" + Utils.getString(currentActivity, R.string.apiKey);
+
+        getRequest(apirequest, new ResponseInterface() {
+            @Override
+            public void Success(JSONObject response) {
+                listener.Success(response);
+            }
+
+            @Override
+            public void Error(VolleyError error) {
+                listener.Error(errorResponse);
+            }
+
+            @Override
+            public void Catch(String error) {
+                try {
+                    errorResponse.put("message", error);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                listener.Error(errorResponse);
+            }
+        });
+    }
+
+    public static void PlaceAPI(String placeId, final RequestInterface listener) {
+        final JSONObject errorResponse = new JSONObject();
+
+        try {
+            errorResponse.put("status", false);
+            errorResponse.put("message", Utils.getString(currentActivity, R.string.default_error));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String apirequest = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + placeId + "&key=" + Utils.getString(currentActivity, R.string.apiKey);
+
+        getRequest(apirequest, new ResponseInterface() {
+            @Override
+            public void Success(JSONObject response) {
+                listener.Success(response);
+            }
+
+            @Override
+            public void Error(VolleyError error) {
+                listener.Error(errorResponse);
+            }
+
+            @Override
+            public void Catch(String error) {
+                try {
+                    errorResponse.put("message", error);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 listener.Error(errorResponse);
             }
         });

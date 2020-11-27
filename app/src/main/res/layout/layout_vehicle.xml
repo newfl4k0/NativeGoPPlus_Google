@@ -15,6 +15,12 @@
         android:contentDescription="@string/vehicle_type"
         android:src="@mipmap/vehiclered" />
 
+    <ImageView
+        android:id="@+id/inactiveVehicleImage"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/vehicle_type"
+        android:src="@mipmap/vehicle" />
 
     <TextView
         android:id="@+id/vehicleType"

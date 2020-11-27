@@ -25,10 +25,12 @@ import com.pplus.go.API.APIRequest;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
 
+import java.util.Objects;
+
 
 public class History extends AppCompatActivity {
 
-    private final HistoryAdapter historyAdapter = new HistoryAdapter();
+    private HistoryAdapter historyAdapter = new HistoryAdapter();
     private JSONArray history = new JSONArray();
     private ListView list;
     private Activity historyActivity = this;
@@ -39,6 +41,9 @@ public class History extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         historyActivity = this;
         Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         list = findViewById(R.id.list);
         list.setAdapter(historyAdapter);

@@ -24,19 +24,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.firebase.iid.InstanceIdResult;
 import com.pplus.go.API.APIRequest;
 import com.pplus.go.Data.Database;
 import com.pplus.go.Utils.Utils;
 import com.pplus.go.app.gopplus.Interfaces.RequestInterface;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.Objects;
 
 
 public class Map extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Onrequest.OnFragmentInteractionListener {
@@ -56,7 +61,15 @@ public class Map extends AppCompatActivity implements NavigationView.OnNavigatio
     private boolean onboardReplaced;
     private boolean onrequestReplaced;
 
+    private RequestOptions imageProfileOptions = new RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .error(R.mipmap.defaultprofile);
+
+
     private void loopService() {
+        try {
+        setupUserImage();
         APIRequest.GetActiveService(new RequestInterface() {
             @Override
             public void Success(JSONObject response) {
@@ -120,9 +133,9 @@ public class Map extends AppCompatActivity implements NavigationView.OnNavigatio
                         }
                     }
 
-                   /* if (getSupportActionBar().isShowing() == false) {
+                    if (!Objects.requireNonNull(getSupportActionBar()).isShowing()) {
                         getSupportActionBar().show();
-                    }*/
+                    }
 
                     if (updateProfile) {
                         loopServiceHandler.postDelayed(
@@ -135,6 +148,11 @@ public class Map extends AppCompatActivity implements NavigationView.OnNavigatio
                 }
             }
         });
+    } catch (Exception e) {
+        Log.e(LCAT, e.toString());
+        loopServiceHandler.postDelayed(
+                () -> loopService(), 1000 * 2);
+    }
     }
 
 
@@ -206,19 +224,19 @@ public class Map extends AppCompatActivity implements NavigationView.OnNavigatio
          */
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /**
          * Setup Navigation Drawer
          */
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         fragmentManager = getSupportFragmentManager().beginTransaction();
@@ -347,6 +365,40 @@ public class Map extends AppCompatActivity implements NavigationView.OnNavigatio
         finish();
     }
 
+    private void setupUserImage() {
+        String user = Database.Select(this, getResources().getString(R.string.db_user));
+
+        if (!user.isEmpty()) {
+            try {
+                JSONObject userObject = new JSONObject(user);
+                String fbid = userObject.getString("fbid");
+                ImageView imageProfile = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.profileImage);
+
+                String profileURL = "";
+
+                if (!fbid.isEmpty()) {
+                    profileURL = "https://graph.facebook.com/" + fbid + "/picture?type=normal&height=100&width=100";
+
+                } else {
+                    profileURL = getResources().getString(R.string.apiEndpoint) + "profile-image?id=" + String.valueOf(userObject.getInt("id"));
+                }
+
+                try {
+                    Glide.with(getApplicationContext())
+                            .load(profileURL)
+                            .apply(imageProfileOptions)
+                            .apply(RequestOptions.circleCropTransform())
+                            .into(imageProfile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Glide.with(getApplicationContext()).load(R.mipmap.defaultprofile).into(imageProfile);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void setupUserProfile() {
         String user = Database.Select(this, getResources().getString(R.string.db_user));
 
@@ -356,33 +408,34 @@ public class Map extends AppCompatActivity implements NavigationView.OnNavigatio
                 String name = userObject.getString("nombre");
                 String fbid = userObject.getString("fbid");
                 ((TextView) navigationView.getHeaderView(0).findViewById(R.id.userName)).setText(name);
-
-                ImageView imageProfile = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.profileImage);
+                ImageView imageProfile = navigationView.getHeaderView(0).findViewById(R.id.profileImage);
 
                 if (!fbid.isEmpty()) {
                     Glide.with(this).load("http://graph.facebook.com/" + fbid + "/picture?type=normal&height=100&width=100").apply(RequestOptions.circleCropTransform()).into(imageProfile);
                 } else {
                     Glide.with(mapActivity).load(getResources().getString(R.string.apiEndpoint) + "profile-image?id=" + String.valueOf(userObject.getInt("id"))).apply(RequestOptions.circleCropTransform()).into(imageProfile);
                 }
+                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( mapActivity, instanceIdResult -> {
+                    String token = instanceIdResult.getToken();
+                    String lastToken = Database.Select(mapActivity, "fcm");
+                    //String token = FirebaseInstanceId.getInstance().getToken();
 
-                String lastToken = Database.Select(mapActivity, "fcm");
-                String token = FirebaseInstanceId.getInstance().getToken();
+                    if (!Objects.requireNonNull(token).isEmpty() && !lastToken.equals(token)) {
+                        Database.Insert(mapActivity, "fcm", token);
 
-                if (!token.isEmpty() && !lastToken.equals(token)) {
-                    Database.Insert(mapActivity, "fcm", token);
+                        APIRequest.PushNotification(token, new RequestInterface() {
+                            @Override
+                            public void Success(JSONObject response) {
+                                Log.d(LCAT, response.toString());
+                            }
 
-                    APIRequest.PushNotification(token, new RequestInterface() {
-                        @Override
-                        public void Success(JSONObject response) {
-                            Log.d(LCAT, response.toString());
-                        }
-
-                        @Override
-                        public void Error(JSONObject error) {
-                            Log.e(LCAT, error.toString());
-                        }
-                    });
-                }
+                            @Override
+                            public void Error(JSONObject error) {
+                                Log.e(LCAT, error.toString());
+                            }
+                        });
+                    }
+                });
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

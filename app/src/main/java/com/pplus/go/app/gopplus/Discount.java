@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.pplus.go.Data.Database;
 
+import java.util.Objects;
+
 public class Discount extends AppCompatActivity {
 
     @Override
@@ -21,7 +23,7 @@ public class Discount extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         try {

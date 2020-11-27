@@ -5,9 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +46,33 @@ public class Login extends AppCompatActivity {
         } else {
             loginActivity = this;
             APIRequest.setQueue(this);
+            sync();
         }
+    }
+
+    private void sync() {
+        APIRequest.PublicSettings(new RequestInterface() {
+            @Override
+            public void Success(JSONObject response) {
+                try {
+                    JSONArray settings = response.getJSONArray("settings");
+
+                    for (int i = 0; i<settings.length(); i++) {
+                        JSONObject setting = settings.getJSONObject(i);
+                        String key = setting.getString("k");
+                        String value = setting.getString("v");
+                        Database.Insert(loginActivity, key, value);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void Error(JSONObject error) {
+                Log.d("LOGIN", "ERROR");
+            }
+        });
     }
 
     @Override

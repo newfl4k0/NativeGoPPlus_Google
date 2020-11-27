@@ -217,7 +217,7 @@ public class Signup extends AppCompatActivity {
 
 
             if (!RegexValidator.validateRequired(birthDay)) {
-                catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_required, "Cumpleaños");
+                catchError += "\n" + RegexValidator.replaceMessage(RegexValidator.message_required, "Fecha de nacimiento");
             }
 
             if (!RegexValidator.validateRequired(name)) {
@@ -325,8 +325,12 @@ public class Signup extends AppCompatActivity {
     }
 
     public void doFacebookLogin(View view) {
-        if (view == facebookCustomButton) {
-            facebookButton.performClick();
+        if (APIRequest.getInternetConnection()) {
+            if (view == facebookCustomButton) {
+                facebookButton.performClick();
+            }
+        } else {
+            Utils.showAlert(signupActivity, "Verifica tu conexión a internet");
         }
     }
 
