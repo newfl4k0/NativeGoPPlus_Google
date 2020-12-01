@@ -72,44 +72,13 @@ public class Location extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, foundAddress);
 
         list.setOnItemClickListener((adapterView, view, i, l) -> {
-            try {
-                dialog.show();
-                String placeId = predictions.getJSONObject(i).getString("place_id");
-
-                APIRequest.PlaceAPI(placeId, new RequestInterface() {
-                    @Override
-                    public void Success(JSONObject response) {
-                        dialog.hide();
-
-                        try {
-                            JSONObject location = response.getJSONObject("result").getJSONObject("geometry").getJSONObject("location");
-                            Intent intent = new Intent();
-
-                            intent.putExtra("address", response.getJSONObject("result").getString("name"));
-                            intent.putExtra("latitude", location.getDouble("lat"));
-                            intent.putExtra("longitude", location.getDouble("lng"));
-
-                            setResult(SUCCESS, intent);
-                            finish();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void Error(JSONObject error) {
-                        Log.e("PLACE", error.toString());
-                        dialog.hide();
-                        Utils.showAlert(locationActivity,  "Algo ha pasado, intenta nuevamente.");
-                    }
-                });
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Utils.showAlert(locationActivity,  "Algo ha pasado, intenta nuevamente.");
-                dialog.hide();
-            }
+            String[] addressText = addresses.get(i).getAddressLine(0).split(",");
+            Intent intent = new Intent();
+            intent.putExtra("address", addressText[0] + " " + addressText[1]);
+            intent.putExtra("latitude", addresses.get(i).getLatitude());
+            intent.putExtra("longitude", addresses.get(i).getLongitude());
+            setResult(SUCCESS, intent);
+            finish();
         });
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
